@@ -1,4 +1,4 @@
-package com.ocms.dal;
+package com.shop.swp391.dal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ public class DBContext {
             //Change the username password and url to connect your own database
             String username = "root";
             String password = "123456";
-            String url = "jdbc:mysql://localhost:3306/ocms";
+            String url = "jdbc:mysql://localhost:3306/SWP391_FASHION_SHOP";
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException | SQLException ex) {

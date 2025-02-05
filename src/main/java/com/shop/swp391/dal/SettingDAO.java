@@ -4,7 +4,7 @@
  */
 package com.shop.swp391.dal;
 
-import com.ocms.dal.DBContext;
+import com.shop.swp391.dal.DBContext;
 import com.ocms.dal.I_DAO;
 import com.shop.swp391.entity.Setting;
 import java.sql.ResultSet;
