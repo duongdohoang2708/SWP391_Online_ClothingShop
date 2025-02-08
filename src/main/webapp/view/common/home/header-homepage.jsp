@@ -50,7 +50,7 @@
                                     <div class="cart-content-wraper">
                                         <div class="cart-single-wraper">
                                             <div class="cart-img">
-                                                <a href="#"><img src="images/product/01.jpg" alt=""></a>
+                                                <a href="#"><img src="${pageContext.request.contextPath}/assets/home/images/product/01.jpg" alt=""></a>
                                             </div>
                                             <div class="cart-content">
                                                 <div class="cart-name"> <a href="#">Aenean Eu Tristique</a>
@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="cart-single-wraper">
                                             <div class="cart-img">
-                                                <a href="#"><img src="images/product/02.jpg" alt=""></a>
+                                                <a href="#"><img src="${pageContext.request.contextPath}/assets/home/images/product/02.jpg" alt=""></a>
                                             </div>
                                             <div class="cart-content">
                                                 <div class="cart-name"> <a href="#">Aenean Eu Tristique</a>
@@ -96,7 +96,7 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="logo ptb-20"><a href="index.html">
-                                <img src="images/logo/logo.png" alt="main logo"></a>
+                                <img src="${pageContext.request.contextPath}/assets/home/images/logo/logo.png" alt="main logo"></a>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-10 d-none d-md-block">
@@ -135,7 +135,7 @@
                                         </ul>
                                         <div class="mega-banner-img">
                                             <a href="single-product.html"><img
-                                                    src="images/banner/banner-fashion-02.jpg" alt=""></a>
+                                                    src="${pageContext.request.contextPath}/assets/home/images/banner/banner-fashion-02.jpg" alt=""></a>
                                         </div>
                                     </div>
                                 </li>
@@ -167,7 +167,7 @@
                                         </ul>
                                         <div class="mega-banner-img">
                                             <a href="single-product.html"><img
-                                                    src="images/banner/banner-fashion.jpg" alt=""></a>
+                                                    src="${pageContext.request.contextPath}/assets/home/images/banner/banner-fashion.jpg" alt=""></a>
                                         </div>
                                     </div>
                                 </li>
