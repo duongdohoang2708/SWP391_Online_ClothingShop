@@ -337,199 +337,43 @@
                     </div>
                     <!--shop sidebar end-->
                     
-                    <!--main-shop-product start-->
-                    <div class="col-lg-9 col-md-8 order-lg-2 order-md-2 order-1">
-                       <div class="row">
-                            <div class="blog-wraper row">
-                            <div class="col-lg-6">
-                                <div class="single-blog sb-2 mb-30">
-                                    <div class="blog-img pos-rltv product-overlay">
-                                        <a href="#"><img src="images/blog/01.jpg" alt=""></a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-title">
-                                            <h5 class="uppercase font-bold"><a href="#">New fashion collection 2022</a></h5>
-                                            <div class="like-comments-date">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-favorite-outline"></i>13 Like</a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-comment-outline"></i>03 Comments</a></li>
-                                                    <li class="blog-date"><a href="#"><i class="zmdi zmdi-calendar-alt"></i>16 jun 2022</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="blog-text">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                                                    when looking at its layout. The point of using.</p>
-                                            </div> <a class="read-more montserrat" href="single-blog.html">Read More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="single-blog sb-2 mb-30">
-                                    <div class="blog-img pos-rltv product-overlay">
-                                        <a href="#"><img src="images/blog/02.jpg" alt=""></a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-title">
-                                            <h5 class="uppercase font-bold"><a href="#">New fashion collection 2022</a></h5>
-                                            <div class="like-comments-date">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-favorite-outline"></i>13 Like</a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-comment-outline"></i>03 Comments</a></li>
-                                                    <li class="blog-date"><a href="#"><i class="zmdi zmdi-calendar-alt"></i>16 jun 2022</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="blog-text">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using.</p>
-                                            </div> <a class="read-more montserrat" href="single-blog.html">Read More</a> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="single-blog sb-2 mb-30">
-                                    <div class="blog-img pos-rltv product-overlay">
-                                        <a href="#"><img src="images/blog/03.jpg" alt=""></a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-title">
-                                            <h5 class="uppercase font-bold"><a href="#">New fashion collection 2022</a></h5>
-                                            <div class="like-comments-date">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-favorite-outline"></i>13 Like</a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-comment-outline"></i>03 Comments</a></li>
-                                                    <li class="blog-date"><a href="#"><i class="zmdi zmdi-calendar-alt"></i>16 jun 2022</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="blog-text">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                                                    when looking at its layout. The point of using.</p>
-                                            </div> <a class="read-more montserrat" href="single-blog.html">Read More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="single-blog sb-2 mb-30">
-                                    <div class="blog-img pos-rltv product-overlay">
-                                        <a href="#"><img src="images/blog/01.jpg" alt=""></a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-title">
-                                            <h5 class="uppercase font-bold"><a href="#">New fashion collection 2022</a></h5>
-                                            <div class="like-comments-date">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-favorite-outline"></i>13 Like</a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-comment-outline"></i>03 Comments</a></li>
-                                                    <li class="blog-date"><a href="#"><i class="zmdi zmdi-calendar-alt"></i>16 jun 2022</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="blog-text">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                                                    when looking at its layout. The point of using.</p>
-                                            </div> <a class="read-more montserrat" href="single-blog.html">Read More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 d-md-none d-block d-lg-block">
-                                <div class="single-blog sb-2 mb-30">
-                                    <div class="blog-img pos-rltv product-overlay">
-                                        <a href="#"><img src="images/blog/01.jpg" alt=""></a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-title">
-                                            <h5 class="uppercase font-bold"><a href="#">New fashion collection 2022</a></h5>
-                                            <div class="like-comments-date">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-favorite-outline"></i>13 Like</a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-comment-outline"></i>03 Comments</a></li>
-                                                    <li class="blog-date"><a href="#"><i class="zmdi zmdi-calendar-alt"></i>16 jun 2022</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="blog-text">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                                                    when looking at its layout. The point of using.</p>
-                                            </div> <a class="read-more montserrat" href="single-blog.html">Read More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 d-md-none d-block d-lg-block">
-                                <div class="single-blog sb-2 mb-30">
-                                    <div class="blog-img pos-rltv product-overlay">
-                                        <a href="#"><img src="images/blog/02.jpg" alt=""></a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-title">
-                                            <h5 class="uppercase font-bold"><a href="#">New fashion collection 2022</a></h5>
-                                            <div class="like-comments-date">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-favorite-outline"></i>13 Like</a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-comment-outline"></i>03 Comments</a></li>
-                                                    <li class="blog-date"><a href="#"><i class="zmdi zmdi-calendar-alt"></i>16 jun 2022</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="blog-text">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                                                    when looking at its layout. The point of using.</p>
-                                            </div> <a class="read-more montserrat" href="single-blog.html">Read More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 d-md-none d-block d-lg-block">
-                                <div class="single-blog sb-2 mb-30">
-                                    <div class="blog-img pos-rltv product-overlay">
-                                        <a href="#"><img src="images/blog/03.jpg" alt=""></a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-title">
-                                            <h5 class="uppercase font-bold"><a href="#">New fashion collection 2022</a></h5>
-                                            <div class="like-comments-date">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-favorite-outline"></i>13 Like</a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-comment-outline"></i>03 Comments</a></li>
-                                                    <li class="blog-date"><a href="#"><i class="zmdi zmdi-calendar-alt"></i>16 jun 2022</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="blog-text">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                                                    when looking at its layout. The point of using.</p>
-                                            </div> <a class="read-more montserrat" href="single-blog.html">Read More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 d-md-none d-block d-lg-block">
-                                <div class="single-blog sb-2 mb-30">
-                                    <div class="blog-img pos-rltv product-overlay">
-                                        <a href="#"><img src="images/blog/01.jpg" alt=""></a>
-                                    </div>
-                                    <div class="blog-content">
-                                        <div class="blog-title">
-                                            <h5 class="uppercase font-bold"><a href="#">New fashion collection 2022</a></h5>
-                                            <div class="like-comments-date">
-                                                <ul>
-                                                    <li><a href="#"><i class="zmdi zmdi-favorite-outline"></i>13 Like</a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-comment-outline"></i>03 Comments</a></li>
-                                                    <li class="blog-date"><a href="#"><i class="zmdi zmdi-calendar-alt"></i>16 jun 2022</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="blog-text">
-                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page
-                                                    when looking at its layout. The point of using.</p>
-                                            </div> <a class="read-more montserrat" href="single-blog.html">Read More</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+ <!--blog main area are start-->
+<div class="col-lg-9 col-md-8 order-lg-2 order-md-2 order-1">
+    <div class="row">
+        <div class="blog-wraper row">
+            <c:forEach var="blog" items="${blogList}">
+                <div class="col-lg-6">
+                    <div class="single-blog sb-2 mb-30">
+                        <div class="blog-img pos-rltv product-overlay">
+                            <a href="BlogDetailServlet?id=${blog.id}">
+                                <img src="${blog.imageUrl}" alt="${blog.title}">
+                            </a>
                         </div>
+                        <div class="blog-content">
+                            <div class="blog-title">
+                                <h5 class="uppercase font-bold">
+                                    <a href="BlogDetailServlet?id=${blog.id}">${blog.title}</a>
+                                </h5>
+                                <div class="like-comments-date">
+                                    <ul>
+                                        <li><a href="#"><i class="zmdi zmdi-favorite-outline"></i>${blog.likes} Like</a></li>
+                                        <li><a href="#"><i class="zmdi zmdi-comment-outline"></i>${blog.comments} Comments</a></li>
+                                        <li class="blog-date"><a href="#"><i class="zmdi zmdi-calendar-alt"></i>${blog.date}</a></li>
+                                    </ul>
+                                </div>
+                                <div class="blog-text">
+                                    <p>${blog.shortDescription}</p>
+                                </div> 
+                                <a class="read-more montserrat" href="BlogDetailServlet?id=${blog.id}">Read More</a>
+                            </div>
                         </div>
                     </div>
-                    <!--main-shop-product start-->
                 </div>
-            </div>
+            </c:forEach>
         </div>
+    </div>
+</div>
+
         <!--blog main area are end-->
         
         <!-- footer area start-->
