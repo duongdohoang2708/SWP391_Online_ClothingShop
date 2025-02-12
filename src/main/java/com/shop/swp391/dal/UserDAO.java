@@ -344,7 +344,7 @@ public class UserDAO extends DBContext implements I_DAO<User> {
         user.setSex(rs.getBoolean("Sex"));
         user.setRoleId(rs.getInt("Role"));
         user.setPhone(rs.getString("Phone"));
-        user.setActive(rs.getBoolean("IsActive"));
+        //user.setActive(rs.getBoolean("IsActive")); //chua co
         return user;
     }
 

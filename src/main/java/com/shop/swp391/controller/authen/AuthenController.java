@@ -110,7 +110,7 @@ public class AuthenController extends HttpServlet {
             // false => quay tro lai trang login ( set them thong bao loi )
         } else {
             request.setAttribute("error", "Username or password incorrect!!");
-            url = "view/authen/login.jsp";
+            url = "view/authen/loginRegister.jsp";
         }
         return url;
     }

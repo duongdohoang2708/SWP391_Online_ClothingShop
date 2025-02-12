@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -39,45 +40,72 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <form action="#" class="login-side">
+                        <form action="authen?action=login" method="post" class="login-side">
                             <div class="login-reg">
                                 <h3>Login</h3>
+
+                                <!-- Hiển thị lỗi nếu có -->
+                                <c:if test="${not empty error}">
+                                    <div class="alert alert-danger">
+                                        ${error}
+                                    </div>
+                                </c:if>
+
                                 <div class="input-box mb-20">
-                                    <label class="control-label">E-Mail</label>
-                                    <input type="email" placeholder="E-Mail" value="" name="email" class="info">
+                                    <label class="control-label">E-Mail / Username</label>
+                                    <input type="text" placeholder="E-Mail or Username" name="username" class="info" required>
                                 </div>
                                 <div class="input-box">
                                     <label class="control-label">Password</label>
-                                    <input type="password" placeholder="Password" value="" name="password" class="info">
+                                    <input type="password" placeholder="Password" name="password" class="info" required>
                                 </div>
                             </div>
                             <div class="frm-action">
                                 <div class="input-box tci-box">
-                                    <a href="#" class="btn-def btn2">Login</a>
+                                    <a href="#" onclick="this.closest('form').submit(); return false;" class="btn-def btn2">Login</a>
                                 </div>
                                 <span>
-                             <input class="remr" type="checkbox"> Remember me 
-                         </span>
-                                <a href="#" class="forgotten forg">Forgotten Password</a>
+                                    <input class="remr" type="checkbox" name="remember"> Remember me 
+                                </span>
+                                <a href="authen?action=enter-email" class="forgotten forg">Forgotten Password?</a>
                             </div>
                         </form>
                     </div>
                     <div class="col-md-6 lr2">
-                        <form action="#">
+                        <form action="authen?action=sign-up" method="post">
                             <div class="login-reg">
                                 <h3>Register</h3>
+
+                                <!-- Hiển thị lỗi nếu có -->
+                                <c:if test="${not empty error}">
+                                    <div class="alert alert-danger">
+                                        ${error}
+                                    </div>
+                                </c:if>
+
+                                <div class="input-box mb-20">
+                                    <label class="control-label">Username</label>
+                                    <input type="text" class="info" placeholder="Username" name="username" required>
+                                </div>
+
                                 <div class="input-box mb-20">
                                     <label class="control-label">E-Mail</label>
-                                    <input type="email" class="info" placeholder="E-Mail" value="" name="email">
+                                    <input type="email" class="info" placeholder="E-Mail" name="email" required>
                                 </div>
+
                                 <div class="input-box">
                                     <label class="control-label">Password</label>
-                                    <input type="password" class="info" placeholder="Password" value="" name="password">
+                                    <input type="password" class="info" placeholder="Password" name="password" required>
+                                </div>
+
+                                <div class="input-box">
+                                    <label class="control-label">Confirm Password</label>
+                                    <input type="password" class="info" placeholder="Confirm Password" name="confirmPassword" required>
                                 </div>
                             </div>
                             <div class="frm-action">
                                 <div class="input-box tci-box">
-                                    <a href="#" class="btn-def btn2">Register</a>
+                                    <a href="#" onclick="this.closest('form').submit(); return false;" class="btn-def btn2">Register</a>
                                 </div>
                             </div>
                         </form>
