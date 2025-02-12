@@ -96,7 +96,7 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="logo ptb-20"><a href="index.html">
-                                <img src="${pageContext.request.contextPath}/assets/home/images/logo/logo.png" alt="main logo"></a>
+                                <img src="${pageContext.request.contextPath}/assets/home/images/logo/STORE 24 (2).png" alt="main logo"></a>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-10 d-none d-md-block">
