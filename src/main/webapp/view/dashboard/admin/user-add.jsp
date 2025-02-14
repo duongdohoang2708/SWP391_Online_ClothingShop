@@ -52,11 +52,11 @@
 
                                         <div class="mb-20">
                                             <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">First Name <span class="text-danger-600">*</span></label>
-                                            <input type="text" class="form-control radius-8" id="name" placeholder="Enter First Name" name="firstname">
+                                            <input type="text" class="form-control radius-8" id="name" placeholder="Enter First Name" name="firstname" required="">
                                         </div>
                                         <div class="mb-20">
                                             <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">Last Name <span class="text-danger-600">*</span></label>
-                                            <input type="text" class="form-control radius-8" id="name" placeholder="Enter Last Name" name="lastname">
+                                            <input type="text" class="form-control radius-8" id="name" placeholder="Enter Last Name" name="lastname" required="">
                                         </div>
                                         <div class="mb-20">
                                             <label for="depart" class="form-label fw-semibold text-primary-light text-sm mb-8">Sex <span class="text-danger-600">*</span> </label>
@@ -67,15 +67,15 @@
                                         </div>
                                         <div class="mb-20">
                                             <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">BirthDate <span class="text-danger-600">*</span></label>
-                                            <input type="date" class="form-control radius-8" id="name" placeholder="Enter BirthDate" name="dob">
+                                            <input type="date" class="form-control radius-8" id="name" placeholder="Enter BirthDate" name="dob" required="">
                                         </div>
                                         <div class="mb-20">
                                             <label for="email" class="form-label fw-semibold text-primary-light text-sm mb-8">Email <span class="text-danger-600">*</span></label>
-                                            <input type="email" class="form-control radius-8" id="email" placeholder="Enter email address" name="email">
+                                            <input type="email" class="form-control radius-8" id="email" placeholder="Enter email address" name="email" required="">
                                         </div>
                                         <div class="mb-20">
                                             <label for="number" class="form-label fw-semibold text-primary-light text-sm mb-8">Phone</label>
-                                            <input type="text" class="form-control radius-8" id="number" placeholder="Enter phone number" name="phone">
+                                            <input type="text" class="form-control radius-8" id="number" placeholder="Enter phone number" name="phone" required="">
                                         </div>
                                         <div class="mb-20">
                                             <label for="depart" class="form-label fw-semibold text-primary-light text-sm mb-8">Role<span class="text-danger-600">*</span> </label>
@@ -89,11 +89,11 @@
                                         </div>
                                         <div class="mb-20">
                                             <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">Username <span class="text-danger-600">*</span></label>
-                                            <input type="text" class="form-control radius-8" id="name" placeholder="Enter Username" name="username">
+                                            <input type="text" class="form-control radius-8" id="name" placeholder="Enter Username" name="username" required="">
                                         </div>
                                         <div class="mb-20">
                                             <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">Password <span class="text-danger-600">*</span></label>
-                                            <input type="password" class="form-control radius-8" id="name" placeholder="Enter Password" name="password">
+                                            <input type="password" class="form-control radius-8" id="name" placeholder="Enter Password" name="password" required="">
                                         </div>
 
                                         <div class="d-flex align-items-center justify-content-center gap-3">

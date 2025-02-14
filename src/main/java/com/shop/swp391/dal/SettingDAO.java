@@ -43,12 +43,12 @@ public class SettingDAO extends DBContext implements I_DAO<Setting> {
     @Override
     public boolean update(Setting setting) {
         String sql = "UPDATE `SWP391_FASHION_SHOP`.`setting`\n"
-                + "SET\n"
-                + "`type` = ?,\n"
-                + "`value` = ?,\n"
-                + "`order` = ?,\n"
-                + "`status` = ?,\n"
-                + "WHERE `id` = ?;";
+            + "SET\n"
+            + "`type` = ?,\n"
+            + "`value` = ?,\n"
+            + "`order` = ?,\n"
+            + "`status` = ?\n" 
+            + "WHERE `id` = ?;";
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql);
@@ -80,7 +80,7 @@ public class SettingDAO extends DBContext implements I_DAO<Setting> {
                 + "`type`, "
                 + "`value`, "
                 + "`order`, "
-                + "`status`, "
+                + "`status`) "
                 + "VALUES (?, ?, ?, ?);";
         try {
             connection = getConnection();

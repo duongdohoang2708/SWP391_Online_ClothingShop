@@ -59,11 +59,11 @@
                                         </div>
                                         <div class="mb-20">
                                             <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">Value <span class="text-danger-600">*</span></label>
-                                            <input type="text" class="form-control radius-8" id="name" placeholder="Enter Value" name="value">
+                                            <input type="text" class="form-control radius-8" id="name" placeholder="Enter Value" name="value" required="">
                                         </div>
                                         <div class="mb-20">
                                             <label for="name" class="form-label fw-semibold text-primary-light text-sm mb-8">Order <span class="text-danger-600">*</span></label>
-                                            <input type="number" class="form-control radius-8" id="name" placeholder="Enter Order" name="order">
+                                            <input type="number" class="form-control radius-8" id="name" placeholder="Enter Order" name="order" required="">
                                         </div>
                                         <div class="mb-20">
                                             <label for="depart" class="form-label fw-semibold text-primary-light text-sm mb-8">Status<span class="text-danger-600">*</span> </label>
