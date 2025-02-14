@@ -15,7 +15,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Store 24 - Manage accounts</title>
+        <title>Store 24-Manage users</title>
         <link rel="icon" type="image/png" href="assets/images/favicon.png" sizes="16x16">
         <!-- CSS here -->
         <jsp:include page="../../common/dashboard/css-dashboard.jsp"></jsp:include>

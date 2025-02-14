@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "ManageAccountController", urlPatterns = {"/manage-users"})
-public class ManageAccountController extends HttpServlet {
+@WebServlet(name = "ManageUserController", urlPatterns = {"/manage-users"})
+public class ManageUserController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
