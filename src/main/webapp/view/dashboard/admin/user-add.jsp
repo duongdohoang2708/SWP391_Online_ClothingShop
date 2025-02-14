@@ -117,44 +117,13 @@
                 </div>
             </div>
         </div>
-
-        <footer class="d-footer">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-auto">
-                    <p class="mb-0">© 2024 WowDash. All Rights Reserved.</p>
-                </div>
-                <div class="col-auto">
-                    <p class="mb-0">Made by <span class="text-primary-600">wowtheme7</span></p>
-                </div>
-            </div>
-        </footer>
     </main>
 
     <!-- JS here -->
     <jsp:include page="../../common/dashboard/js-dashboard.jsp"></jsp:include>
 
 
-    <script>
-        // ================== Image Upload Js Start ===========================
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
-                    $('#imagePreview').hide();
-                    $('#imagePreview').fadeIn(650);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $("#imageUpload").change(function () {
-            readURL(this);
-        });
-        // ================== Image Upload Js End ===========================
-    </script>
-
 </body>
 
-<!-- Mirrored from wowdash.wowtheme7.com/demo/add-user.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Feb 2025 04:44:21 GMT -->
 </html>
 
