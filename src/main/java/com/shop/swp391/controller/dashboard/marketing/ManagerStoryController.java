@@ -52,8 +52,8 @@ public class ManagerStoryController extends HttpServlet {
                 case "edit":
                     showEditForm(request, response);
                     break;
-                case "delete":
-                    deleteStory(request, response);
+                case "deactivate":
+                    deactivateStory(request, response);
                     break;
             }
         }
@@ -82,6 +82,7 @@ public class ManagerStoryController extends HttpServlet {
     private void handleListWithFilters(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String searchFilter = request.getParameter("search");
+        String statusFilter = request.getParameter("status");
 
         int page = 1;
         int pageSize = 10;
@@ -97,8 +98,8 @@ public class ManagerStoryController extends HttpServlet {
             }
         }
 
-        List<Story> stories = storyDAO.findStoriesWithFilters(searchFilter, page, pageSize);
-        int totalStories = storyDAO.getTotalStories(searchFilter);
+        List<Story> stories = storyDAO.findStoriesWithFilters(searchFilter, statusFilter, page, pageSize);
+        int totalStories = storyDAO.getTotalStories(searchFilter, statusFilter);
         int totalPages = (int) Math.ceil((double) totalStories / pageSize);
 
         List<User> users = userDAO.findAll();
@@ -110,6 +111,7 @@ public class ManagerStoryController extends HttpServlet {
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("totalStories", totalStories);
         request.setAttribute("userMap", userMap);
+        request.setAttribute("statusFilter", statusFilter);
         request.setAttribute("searchFilter", searchFilter);
 
         request.getRequestDispatcher("view/marketing/slider_list.jsp").forward(request, response);
@@ -138,20 +140,22 @@ public class ManagerStoryController extends HttpServlet {
     private void addStory(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+//        User user = (User) session.getAttribute("user");
+//        if (user == null) {
+//            response.sendRedirect(request.getContextPath() + "/login");
+//            return;
+//        }
 
         String title = request.getParameter("title");
+        String backlink = request.getParameter("backlink");
         String description = request.getParameter("description");
+        String status = request.getParameter("status");
 
         Part filePart = request.getPart("thumbnail");
         String fileName = null;
         if (filePart != null && filePart.getSize() > 0) {
             fileName = System.currentTimeMillis() + "_" + getFileName(filePart);
-            String uploadPath = request.getServletContext().getRealPath("") + "assets/img/story";
+            String uploadPath = request.getServletContext().getRealPath("") + "assets/imgages/story";
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
@@ -159,7 +163,13 @@ public class ManagerStoryController extends HttpServlet {
             filePart.write(uploadPath + File.separator + fileName);
         }
 
-        Story story = new Story(0, "assets/img/story/" + fileName, title, description);
+        Story story = Story.builder()
+                .title(title)
+                .thumbnail(fileName != null ? ("assets/images/story/" + fileName) : null)
+                .backlink(backlink)
+                .description(description)
+                .status(status)
+                .build();
 
         int result = storyDAO.insert(story);
         if (result > 0) {
@@ -175,28 +185,52 @@ public class ManagerStoryController extends HttpServlet {
     private void updateStory(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+//        User user = (User) session.getAttribute("user");
+//        if (user == null) {
+//            response.sendRedirect(request.getContextPath() + "/login");
+//            return;
+//        }
 
         int storyId = Integer.parseInt(request.getParameter("id"));
         Story story = storyDAO.findById(storyId);
 
         String title = request.getParameter("title");
+        String backlink = request.getParameter("backlink");
         String description = request.getParameter("description");
+        String status = request.getParameter("status");
 
+//        Part filePart = request.getPart("thumbnail");
+//        if (filePart != null && filePart.getSize() > 0) {
+//            String fileName = System.currentTimeMillis() + "_" + getFileName(filePart);
+//            String uploadPath = request.getServletContext().getRealPath("") + "assets/images/story";
+//            filePart.write(uploadPath + File.separator + fileName);
+//            story.setThumbnail("assets/img/story/" + fileName);
+//        }
         Part filePart = request.getPart("thumbnail");
-        if (filePart != null && filePart.getSize() > 0) {
+        if (filePart != null && filePart.getSize() > 0){
+         if (story.getThumbnail()!= null && !story.getThumbnail().isEmpty()) {
+                String oldThumbnailPath = request.getServletContext().getRealPath("") + story.getThumbnail();
+                File oldThumbnail = new File(oldThumbnailPath);
+                if (oldThumbnail.exists()) {
+                    oldThumbnail.delete();
+                }
+            }
+
+            // Save new image
             String fileName = System.currentTimeMillis() + "_" + getFileName(filePart);
-            String uploadPath = request.getServletContext().getRealPath("") + "assets/img/story";
+            String uploadPath = request.getServletContext().getRealPath("") + "assets/images/story";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+            }
             filePart.write(uploadPath + File.separator + fileName);
-            story.setThumbnail("assets/img/story/" + fileName);
+            story.setThumbnail("assets/images/story/" + fileName);
         }
 
         story.setTitle(title);
+        story.setBacklink(backlink);
         story.setDescription(description);
+        story.setStatus(status);
 
         boolean result = storyDAO.update(story);
         if (result) {
@@ -209,21 +243,14 @@ public class ManagerStoryController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/manage-story");
     }
 
-    private void deleteStory(HttpServletRequest request, HttpServletResponse response)
+    private void deactivateStory(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int storyId = Integer.parseInt(request.getParameter("id"));
         Story story = storyDAO.findById(storyId);
 
         if (story != null) {
-            boolean result = storyDAO.delete(story);
-            HttpSession session = request.getSession();
-            if (result) {
-                session.setAttribute("toastMessage", "Story deleted successfully!");
-                session.setAttribute("toastType", "success");
-            } else {
-                session.setAttribute("toastMessage", "Failed to delete story!");
-                session.setAttribute("toastType", "error");
-            }
+            story.setStatus("Inactive");
+            storyDAO.update(story);
         }
         response.sendRedirect(request.getContextPath() + "/manage-story");
     }

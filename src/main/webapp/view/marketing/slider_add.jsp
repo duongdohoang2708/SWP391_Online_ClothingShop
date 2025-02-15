@@ -407,13 +407,13 @@
         </a>
         <ul class="sidebar-submenu">
           <li>
-            <a href="slider_list.jsp"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Slider</a>
+            <a href="${pageContext.request.contextPath}/manage-story"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Slider</a>
           </li>
           <li>
-            <a href="slider_detail.jsp"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Slider Details</a>
+            <a href="${pageContext.request.contextPath}/view/marketing/slider_details.jsp"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Slider Details</a>
           </li>
           <li>
-            <a href="${pageContext.request.contextPath}/manage-story?action=add"><><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add Slider</a>
+            <a href="${pageContext.request.contextPath}/manage-story?action=add"><a href="${pageContext.request.contextPath}/view/marketing/slider_detail.jsp"><><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add Slider</a>
           </li>
         </ul>
       </li>
@@ -866,37 +866,31 @@
                         <h6 class="text-xl mb-0">Add New Slider</h6>
                     </div>
                     <div class="card-body p-24">
-                        <form action="#" class="d-flex flex-column gap-20">
+                        <form action="${pageContext.request.contextPath}/manage-story"  method="post" enctype="multipart/form-data" class="d-flex flex-column gap-20">
+                            <input type="hidden" name="action" value="add"/>
                             <div>
                                 <label class="form-label fw-bold text-neutral-900" for="title">Post Title: </label>
-                                <input type="text" class="form-control border border-neutral-200 radius-8" id="title" placeholder="Enter Post Title">
+                                <input type="text" class="form-control border border-neutral-200 radius-8" id="title" name="title" placeholder="Enter Post Title">
                             </div>
-                            <form action="#" class="d-flex flex-column gap-20">
+                         
                               <div>
-                                  <label class="form-label fw-bold text-neutral-900" for="title">Backlink URL: </label>
-                                  <input type="text" class="form-control border border-neutral-200 radius-8" id="title" placeholder="Enter Backlink URL">
+                                  <label class="form-label fw-bold text-neutral-900" for="backlink">Backlink URL: </label>
+                                 <input type="url" class="form-control border border-neutral-200 radius-8" id="backlink" name="backlink" placeholder="Enter Backlink URL">
+
                               </div>
                               
-                            <div>
-                                <label class="form-label fw-bold text-neutral-900">Post Category: </label>
-                                <select class="form-control border border-neutral-200 radius-8">
-                                    <option value="">Spring</option>
-                                    <option value="">Summer</option>
-                                    <option value="">Fall</option>
-                                    <option value="">Winter</option>
-                                </select>
-                            </div>
-                            <div>
-                              <label class="form-label fw-bold text-neutral-900">Status: </label>
-                              <select class="form-control border border-neutral-200 radius-8">
-                                  <option value="">Active</option>
-                                  <option value="">Inactive</option>
+                                <div>
+                                    <label class="form-label fw-bold text-neutral-900" for="status">Status</label>
+                                <select class="form-control border border-neutral-200 radius-8" id="status" name="status"> 
+                                  <option value="Active">Active</option>
+                                  <option value="Inactive">Inactive</option>
                                 
                               </select>
                           </div>
                             <div>
-                                <label class="form-label fw-bold text-neutral-900">Post Description </label>
-                                <div class="border border-neutral-200 radius-8 overflow-hidden">
+                                <label for="description" class="form-label fw-bold text-neutral-900"> Post Description </label>
+<!--                                <textarea id="description" name="description" class="form-control border border-neutral-200 radius-8"></textarea>-->
+
                                     <div class="height-200">
                                         <!-- Editor Toolbar Start -->
                                        <div id="toolbar-container">
@@ -945,10 +939,11 @@
                                            </span>
                                        </div>
                                        <!-- Editor Toolbar Start -->
-                               
+                              
+
                                        <!-- Editor start -->
                                        <div id="editor">
-                                           <p class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis dolores explicabo corrupti, fuga</p>
+                                           <p class=""></p>
                                            <p><br></p>
                                        </div>
                                        <!-- Edit End -->
@@ -957,7 +952,7 @@
                             </div>
 
                             <div>
-                                <label class="form-label fw-bold text-neutral-900">Upload Thumbnail </label>
+                                <label for="imageUrl" class="form-label fw-bold text-neutral-900">Upload Thumbnail </label>
                                 <div class="upload-image-wrapper">
                                     <div class="uploaded-img d-none position-relative h-160-px w-100 border input-form-light radius-8 overflow-hidden border-dashed bg-neutral-50">
                                         <button type="button" class="uploaded-img__remove position-absolute top-0 end-0 z-1 text-2xxl line-height-1 me-8 mt-8 d-flex bg-danger-600 w-40-px h-40-px justify-content-center align-items-center rounded-circle">
@@ -968,108 +963,22 @@
                                     <label class="upload-file h-160-px w-100 border input-form-light radius-8 overflow-hidden border-dashed bg-neutral-50 bg-hover-neutral-200 d-flex align-items-center flex-column justify-content-center gap-1" for="upload-file">
                                         <iconify-icon icon="solar:camera-outline" class="text-xl text-secondary-light"></iconify-icon>
                                         <span class="fw-semibold text-secondary-light">Upload</span>
-                                        <input id="upload-file" type="file" hidden>
+                                        <input id="upload-file" type="file" name="thumbnail" hidden>
+
                                     </label>
                                 </div>
                             </div>
                             
                             <button type="submit" class="btn btn-primary-600 radius-8">Submit</button>
+                             <a href="${pageContext.request.contextPath}/manage-story"
+                                                       class="btn btn-secondary ml-2">Cancel</a>
                         </form>
                     </div>
                 </div>
             </div>
 
             <!-- Sidebar Start -->
-            <div class="col-lg-4">
-                <div class="d-flex flex-column gap-24">
-                    <!-- Latest Slider -->
-                    <div class="card">
-                        <div class="card-header border-bottom">
-                            <h6 class="text-xl mb-0">Latest Posts</h6>
-                        </div>
-<!--                        <div class="card-body d-flex flex-column gap-24 p-24">
-                            <div class="d-flex flex-wrap">
-                                <a href="slider_detail.jsp" class="Slider__thumb w-100 radius-12 overflow-hidden">
-                                    <img src="${pageContext.request.contextPath}/assets/images/Slider/Slider1.png" alt="" class="w-100 h-100 object-fit-cover">                        
-                                </a>
-                                <div class="Slider__content">
-                                    <h6 class="mb-8">
-                                        <a href="slider_detail.jsp" class="text-line-2 text-hover-primary-600 text-md transition-2">How to hire a right business executive for your company</a>
-                                    </h6>
-                                    <p class="text-line-2 text-sm text-neutral-500 mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis dolores explicabo corrupti, fuga necessitatibus fugiat adipisci quidem eveniet enim minus.</p>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-wrap">
-                                <a href="slider_detail.jsp" class="Slider__thumb w-100 radius-12 overflow-hidden">
-                                    <img src="${pageContext.request.contextPath}/assets/images/Slider/Slider2.png" alt="" class="w-100 h-100 object-fit-cover">                        
-                                </a>
-                                <div class="Slider__content">
-                                    <h6 class="mb-8">
-                                        <a href="slider_detail.jsp" class="text-line-2 text-hover-primary-600 text-md transition-2">The Gig Economy: Adapting to a Flexible Workforce</a>
-                                    </h6>
-                                    <p class="text-line-2 text-sm text-neutral-500 mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis dolores explicabo corrupti, fuga necessitatibus fugiat adipisci quidem eveniet enim minus.</p>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-wrap">
-                                <a href="slider_detail.jsp" class="Slider__thumb w-100 radius-12 overflow-hidden">
-                                    <img src="${pageContext.request.contextPath}/assets/images/Slider/Slider3.png" alt="" class="w-100 h-100 object-fit-cover">                        
-                                </a>
-                                <div class="Slider__content">
-                                    <h6 class="mb-8">
-                                        <a href="slider_detail.jsp" class="text-line-2 text-hover-primary-600 text-md transition-2">The Future of Remote Work: Strategies for Success</a>
-                                    </h6>
-                                    <p class="text-line-2 text-sm text-neutral-500 mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis dolores explicabo corrupti, fuga necessitatibus fugiat adipisci quidem eveniet enim minus.</p>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-wrap">
-                                <a href="slider_detail.jsp" class="Slider__thumb w-100 radius-12 overflow-hidden">
-                                    <img src="${pageContext.request.contextPath}/assets/images/Slider/Slider4.png" alt="" class="w-100 h-100 object-fit-cover">                        
-                                </a>
-                                <div class="Slider__content">
-                                    <h6 class="mb-8">
-                                        <a href="slider_detail.jsp" class="text-line-2 text-hover-primary-600 text-md transition-2">Lorem ipsum dolor sit amet consectetur adipisicing.</a>
-                                    </h6>
-                                    <p class="text-line-2 text-sm text-neutral-500 mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis dolores explicabo corrupti, fuga necessitatibus fugiat adipisci quidem eveniet enim minus.</p>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-wrap">
-                                <a href="slider_detail.jsp" class="Slider__thumb w-100 radius-12 overflow-hidden">
-                                    <img src="${pageContext.request.contextPath}/assets/images/Slider/Slider5.png" alt="" class="w-100 h-100 object-fit-cover">                        
-                                </a>
-                                <div class="Slider__content">
-                                    <h6 class="mb-8">
-                                        <a href="slider_detail.jsp" class="text-line-2 text-hover-primary-600 text-md transition-2">How to hire a right business executive for your company</a>
-                                    </h6>
-                                    <p class="text-line-2 text-sm text-neutral-500 mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis dolores explicabo corrupti, fuga necessitatibus fugiat adipisci quidem eveniet enim minus.</p>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-wrap">
-                                <a href="slider_detail.jsp" class="Slider__thumb w-100 radius-12 overflow-hidden">
-                                    <img src="${pageContext.request.contextPath}/assets/images/Slider/Slider6.png" alt="" class="w-100 h-100 object-fit-cover">                        
-                                </a>
-                                <div class="Slider__content">
-                                    <h6 class="mb-8">
-                                        <a href="slider_detail.jsp" class="text-line-2 text-hover-primary-600 text-md transition-2">The Gig Economy: Adapting to a Flexible Workforce</a>
-                                    </h6>
-                                    <p class="text-line-2 text-sm text-neutral-500 mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis dolores explicabo corrupti, fuga necessitatibus fugiat adipisci quidem eveniet enim minus.</p>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-wrap">
-                                <a href="slider_detail.jsp" class="Slider__thumb w-100 radius-12 overflow-hidden">
-                                    <img src="${pageContext.request.contextPath}/assets/images/Slider/Slider7.png" alt="" class="w-100 h-100 object-fit-cover">                        
-                                </a>
-                                <div class="Slider__content">
-                                    <h6 class="mb-8">
-                                        <a href="slider_detail.jsp" class="text-line-2 text-hover-primary-600 text-md transition-2">The Future of Remote Work: Strategies for Success</a>
-                                    </h6>
-                                    <p class="text-line-2 text-sm text-neutral-500 mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis dolores explicabo corrupti, fuga necessitatibus fugiat adipisci quidem eveniet enim minus.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
-                </div>
-            </div>
-        </div>
+            
     </div>
   
     <footer class="d-footer">

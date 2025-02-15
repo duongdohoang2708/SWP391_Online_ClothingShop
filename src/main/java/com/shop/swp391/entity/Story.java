@@ -26,5 +26,7 @@ public class Story implements Serializable {
     private String thumbnail;
     private String title;
     private String description;
+    private String backlink;
+    private String status;
    
 }

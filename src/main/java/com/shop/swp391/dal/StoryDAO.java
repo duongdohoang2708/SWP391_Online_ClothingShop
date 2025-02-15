@@ -3,11 +3,10 @@ package com.shop.swp391.dal;
 import com.shop.swp391.entity.Story;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.Statement;
 import java.time.LocalDateTime;
-import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StoryDAO extends DBContext implements I_DAO<Story> {
 
@@ -32,14 +31,16 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
 
     @Override
     public boolean update(Story story) {
-        String sql = "UPDATE story SET thumbnail = ?, title = ?, description = ? WHERE story_id = ?";
+        String sql = "UPDATE story SET title = ?, thumbnail = ?, backlink = ?, status = ?, description = ? WHERE story_id = ?";
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql);
-            statement.setString(1, story.getThumbnail());
-            statement.setString(2, story.getTitle());
-            statement.setString(3, story.getDescription());
-            statement.setInt(4, story.getStoryId());
+            statement.setString(1, story.getTitle());
+            statement.setString(2, story.getThumbnail());
+            statement.setString(3, story.getBacklink());
+            statement.setString(4, story.getStatus());
+            statement.setString(5, story.getDescription());
+            statement.setInt(6, story.getStoryId());
 
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
@@ -71,14 +72,16 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
 
     @Override
     public int insert(Story story) {
-        String sql = "INSERT INTO story (thumbnail, title, description) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO story (title, thumbnail, backlink, status, description) VALUES (?, ?, ?, ?, ?)";
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            statement.setString(1, story.getThumbnail());
-            statement.setString(2, story.getTitle());
-            statement.setString(3, story.getDescription());
+            statement.setString(1, story.getTitle());
+            statement.setString(2, story.getThumbnail());
+            statement.setString(3, story.getBacklink());
+            statement.setString(4, story.getStatus() != null ? story.getStatus() : "Active");
+            statement.setString(5, story.getDescription());
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -101,12 +104,14 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
 
     @Override
     public Story getFromResultSet(ResultSet rs) throws SQLException {
-        return new Story(
-                rs.getInt("story_id"),
-                rs.getString("thumbnail"),
-                rs.getString("title"),
-                rs.getString("description")
-        );
+        return Story.builder()
+                .storyId(rs.getInt("story_id"))
+                .title(rs.getString("title"))
+                .thumbnail(rs.getString("thumbnail"))
+                .backlink(rs.getString("backlink"))
+                .status(rs.getString("status"))
+                .description(rs.getString("description"))
+                .build();
     }
 
     public Story findById(int id) {
@@ -127,7 +132,25 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
         return null;
     }
 
-    public List<Story> findStoriesWithFilters(String searchFilter, int page, int pageSize) {
+    public List<Story> findActiveStories() {
+        List<Story> stories = new ArrayList<>();
+        String sql = "SELECT * FROM story WHERE status = 'Active' ORDER BY story_id DESC";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                stories.add(getFromResultSet(resultSet));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error finding active stories: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return stories;
+    }
+
+    public List<Story> findStoriesWithFilters(String searchFilter, String statusFilter, int page, int pageSize) {
         List<Story> stories = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM story WHERE 1=1");
         List<Object> params = new ArrayList<>();
@@ -138,6 +161,12 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
             String searchPattern = "%" + searchFilter.trim() + "%";
             params.add(searchPattern);
             params.add(searchPattern);
+        }
+
+        // Add status filter
+        if (statusFilter != null && !statusFilter.trim().isEmpty()) {
+            sql.append(" AND status = ?");
+            params.add(statusFilter);
         }
 
         // Add pagination
@@ -166,7 +195,7 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
         return stories;
     }
 
-    public int getTotalStories(String searchFilter) {
+    public int getTotalStories(String searchFilter, String statusFilter) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM story WHERE 1=1");
         List<Object> params = new ArrayList<>();
 
@@ -176,6 +205,12 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
             String searchPattern = "%" + searchFilter.trim() + "%";
             params.add(searchPattern);
             params.add(searchPattern);
+        }
+
+        // Add status filter
+        if (statusFilter != null && !statusFilter.trim().isEmpty()) {
+            sql.append(" AND status = ?");
+            params.add(statusFilter);
         }
 
         try {
@@ -198,5 +233,4 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
         }
         return 0;
     }
-    
 }

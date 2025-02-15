@@ -407,13 +407,13 @@
         </a>
         <ul class="sidebar-submenu">
           <li>
-            <a href="slider_list.jsp"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Slider List</a>
+            <a href="${pageContext.request.contextPath}/view/marketing/slider_list.jsp"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Slider List</a>
           </li>
           <li>
-            <a href="slider_details.jsp"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Slider Details</a>
+            <a href="${pageContext.request.contextPath}/view/marketing/slider_details.jsp"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Slider Details</a>
           </li>
           <li>
-            <a href="slider_add.jsp"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add Slider</a>
+            <a href="${pageContext.request.contextPath}/view/marketing/slider_add.jsp"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add Slider</a>
           </li>
         </ul>
       </li>
@@ -877,15 +877,7 @@
                                   <input type="text" class="form-control border border-neutral-200 radius-8" id="title" placeholder="Enter Backlink URL">
                               </div>
                               
-                            <div>
-                                <label class="form-label fw-bold text-neutral-900">Post Category: </label>
-                                <select class="form-control border border-neutral-200 radius-8">
-                                    <option value="">Spring</option>
-                                    <option value="">Summer</option>
-                                    <option value="">Fall</option>
-                                    <option value="">Winter</option>
-                                </select>
-                            </div>
+                           
                             <div>
                               <label class="form-label fw-bold text-neutral-900">Status: </label>
                               <select class="form-control border border-neutral-200 radius-8">
@@ -981,14 +973,14 @@
             </div>
 
             <!-- Sidebar Start -->
-            <div class="col-lg-4">
+<!--            <div class="col-lg-4">
                 <div class="d-flex flex-column gap-24">
-                    <!-- Latest Blog -->
+                     Latest Blog 
                     <div class="card">
                         <div class="card-header border-bottom">
                             <h6 class="text-xl mb-0">Latest Posts</h6>
                         </div>
-<!--                        <div class="card-body d-flex flex-column gap-24 p-24">
+                        <div class="card-body d-flex flex-column gap-24 p-24">
                             <div class="d-flex flex-wrap">
                                 <a href="blog-details.html" class="blog__thumb w-100 radius-12 overflow-hidden">
                                     <img src="${pageContext.request.contextPath}/assets/images/blog/blog1.png" alt="" class="w-100 h-100 object-fit-cover">                        
@@ -1067,10 +1059,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
   
     <footer class="d-footer">
