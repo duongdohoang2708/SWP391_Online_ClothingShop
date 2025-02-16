@@ -95,9 +95,9 @@ public class UserDAO extends DBContext implements I_DAO<User> {
                 + "`Dob`, "
                 + "`Sex`, "
                 + "`Role`, "
-                + "`Phone`, "
-                + "`IsActive`) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                + "`Phone`) "
+                // + "`IsActive`) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
         try {
             connection = getConnection();
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -110,7 +110,7 @@ public class UserDAO extends DBContext implements I_DAO<User> {
             statement.setBoolean(7, user.isSex());
             statement.setInt(8, user.getRoleId());
             statement.setString(9, user.getPhone());
-            statement.setBoolean(10, user.isActive());
+            // statement.setBoolean(10, user.isActive());
 
             int affectedRows = statement.executeUpdate();
 
