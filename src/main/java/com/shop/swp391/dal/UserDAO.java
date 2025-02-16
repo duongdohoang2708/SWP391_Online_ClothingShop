@@ -49,8 +49,8 @@ public class UserDAO extends DBContext implements I_DAO<User> {
                 + "`Dob` = ?,\n"
                 + "`Sex` = ?,\n"
                 + "`Role` = ?,\n"
-                + "`Phone` = ?,\n"
-                + "`IsActive` = ?\n"
+                + "`Phone` = ?\n"
+                // + "`IsActive` = ?\n"
                 + "WHERE `UserID` = ?";
         try {
             connection = getConnection();
@@ -64,8 +64,8 @@ public class UserDAO extends DBContext implements I_DAO<User> {
             statement.setBoolean(7, user.isSex());
             statement.setInt(8, user.getRoleId());
             statement.setString(9, user.getPhone());
-            statement.setBoolean(10, user.isActive());
-            statement.setInt(11, user.getId());
+            // statement.setBoolean(10, user.isActive());
+            statement.setInt(10, user.getId());
 
             int affectedRows = statement.executeUpdate();
             return affectedRows > 0;
