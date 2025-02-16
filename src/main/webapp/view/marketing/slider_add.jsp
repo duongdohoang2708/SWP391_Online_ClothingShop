@@ -891,9 +891,9 @@
                                 <label for="description" class="form-label fw-bold text-neutral-900"> Post Description </label>
 <!--                                <textarea id="description" name="description" class="form-control border border-neutral-200 radius-8"></textarea>-->
 
-                                    <div class="height-200">
+                                    <div  class="height-200">
                                         <!-- Editor Toolbar Start -->
-                                       <div id="toolbar-container">
+                                       <div  id="toolbar-container">
                                            <span class="ql-formats">
                                            <select class="ql-font"></select>
                                            <select class="ql-size"></select>
@@ -942,7 +942,7 @@
                               
 
                                        <!-- Editor start -->
-                                       <div id="editor">
+                                       <div  id="editor">
                                            <p class=""></p>
                                            <p><br></p>
                                        </div>

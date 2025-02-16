@@ -44,7 +44,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     </head>
     <body>
-          <c:url value="/manage-slider" var="paginationUrl">
+        <c:url value="/manage-story" var="paginationUrl">
             <c:param name="action" value="list" />
             <c:if test="${not empty param.type}">
                 <c:param name="type" value="${param.type}" />
@@ -925,55 +925,74 @@
                                                 <th style="text-align: center;">Action</th>
                                             </tr>
                                         </thead>
-                                        <c:forEach var="story" items="${stories}">
-                                            <tr>
-                                                <td>
-                                                    <p class="color-black">${story.storyId}</p>
-                                                </td>
-                                                <td>
-                                                    <img src="${pageContext.request.contextPath}/${story.thumbnail}"
-                                                         alt="Story image" class="img-thumbnail"
-                                                         style="width: 100px; height: 60px; object-fit: cover;">
+                                       <c:forEach var="story" items="${stories}">
+    <tr>
+        <td>${story.storyId}</td>
+        <td>
+            <img src="${pageContext.request.contextPath}/${story.thumbnail}" 
+                 alt="Story image" class="img-thumbnail" 
+                 style="width: 100px; height: 60px; object-fit: cover;">
+        </td>
+        <td>${story.title}</td>
+        <td>${story.backlink}</td>
+        <td>
+            <span class="dashboard__quiz-result ${story.status == 'Active' ? 'text-success' : 'text-danger'}">
+                ${story.status}
+            </span>
+        </td>
+        <td>${story.description}</td>
+        <td>
+            <div class="dashboard__review-action">
+                <!-- Nút Edit -->
+                <a href="${pageContext.request.contextPath}/manage-story?action=edit&id=${story.storyId}"
+                   title="Edit">
+                    <i class="ri-edit-line"></i> <!-- RemixIcon -->
+                </a>
+                <!-- Nút Deactivate -->
+                <a href="javascript:void(0);" onclick="confirmDeactivate(${story.storyId})" 
+                   title="Deactivate">
+                    <i class="ri-delete-bin-line"></i>
+                </a>
+            </div>
+        </td>
+    </tr>
+</c:forEach>
 
-                                                </td>
-                                                <td>
-                                                    <p class="color-black">${story.title}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="color-black truncate-text">${story.backlink}</p>
-                                                </td>
-                                                <td>
-                                                    <span style="background: #fff;" 
-                                                          class="dashboard__quiz-result ${story.status == 'Active' ? 'text-success' : 'text-danger'}">
-                                                        ${story.status}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <p class="color-black">${story.description}</p>
-                                                </td>
-                                                <td>
-                                                    <div class="dashboard__review-action">
-                                                        <a href="${pageContext.request.contextPath}/manage-story?action=edit&id=${story.storyId}"
-                                                           title="Edit"></a>
-                                                        <a href="#" onclick="confirmDeactivate(${story.storyId})"
-                                                           title="Deactivate"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
                                     </table>
                                 </div>
 
                                 <!-- Pagination -->
                                 <nav aria-label="Page navigation" style="margin-top: 30px">
-                                    <ul class="pagination justify-content-center">
+                                                    <ul class="pagination justify-content-center">
+                                                        <c:if test="${currentPage > 1}">
+                                                            <li class="page-item">
+                                                                <a class="page-link"
+                                                                   href="${paginationUrl}&page=${currentPage - 1}"
+                                                                   aria-label="Previous">
+                                                                    <span aria-hidden="true">&laquo;</span>
+                                                                </a>
+                                                            </li>
+                                                        </c:if>
 
+                                                        <c:forEach begin="1" end="${totalPages}" var="i">
+                                                            <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                                                <a class="page-link"
+                                                                   href="${paginationUrl}&page=${i}">${i}</a>
+                                                            </li>
+                                                        </c:forEach>
 
+                                                        <c:if test="${currentPage < totalPages}">
+                                                            <li class="page-item">
+                                                                <a class="page-link"
+                                                                   href="${paginationUrl}&page=${currentPage + 1}"
+                                                                   aria-label="Next">
+                                                                    <span aria-hidden="true">&raquo;</span>
+                                                                </a>
+                                                            </li>
+                                                        </c:if>
+                                                    </ul>
+                                                </nav>
 
-
-
-                                    </ul>
-                                </nav>
                             </div>
                         </div>
                     </div>
@@ -992,11 +1011,13 @@
                     </main>
                     <script>
                         function confirmDeactivate(storyId) {
-                            if (confirm("Are you sure you want to deactivate this slider?")) {
+                            if (confirm("Are you sure you want to deactivate this story?")) {
                                 window.location.href = '${pageContext.request.contextPath}/manage-story?action=deactivate&id=' + storyId;
                             }
                         }
                     </script>
+
+
                     <!-- jQuery library js -->
                     <script src="${pageContext.request.contextPath}/assets/js/lib/jquery-3.7.1.min.js"></script>
                     <!-- Bootstrap js -->

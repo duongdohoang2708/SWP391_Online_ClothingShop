@@ -15453,5 +15453,21 @@ td.fc-header-center {
   background-color: var(--white);
   margin-block-start: auto;
 }
+.dashboard__review-action {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;
+}
+.skillgro-edit:before {
+    content: "\f16f";
+}
+.skillgro-bin:before {
+    content: "\f170";
+}
 
 /* === footer css end === */

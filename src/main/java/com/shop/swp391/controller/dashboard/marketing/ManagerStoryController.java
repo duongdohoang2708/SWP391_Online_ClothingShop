@@ -153,9 +153,12 @@ public class ManagerStoryController extends HttpServlet {
 
         Part filePart = request.getPart("thumbnail");
         String fileName = null;
+        if (description == null || description.trim().isEmpty()) {
+    description = "<p>No description provided.</p>"; 
+}
         if (filePart != null && filePart.getSize() > 0) {
             fileName = System.currentTimeMillis() + "_" + getFileName(filePart);
-            String uploadPath = request.getServletContext().getRealPath("") + "assets/imgages/story";
+            String uploadPath = request.getServletContext().getRealPath("") + "assets/images/story";
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
@@ -206,6 +209,10 @@ public class ManagerStoryController extends HttpServlet {
 //            filePart.write(uploadPath + File.separator + fileName);
 //            story.setThumbnail("assets/img/story/" + fileName);
 //        }
+
+if (description == null || description.trim().isEmpty()) {
+    description = "<p>No description provided.</p>"; 
+}
         Part filePart = request.getPart("thumbnail");
         if (filePart != null && filePart.getSize() > 0){
          if (story.getThumbnail()!= null && !story.getThumbnail().isEmpty()) {

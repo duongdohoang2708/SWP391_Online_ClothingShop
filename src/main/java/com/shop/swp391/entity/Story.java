@@ -13,6 +13,7 @@ import lombok.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -21,12 +22,12 @@ import java.io.Serializable;
 @Setter
 @ToString
 public class Story implements Serializable {
-    
-  private int storyId;
+
+    private int storyId;
     private String thumbnail;
     private String title;
     private String description;
     private String backlink;
     private String status;
-   
+
 }
