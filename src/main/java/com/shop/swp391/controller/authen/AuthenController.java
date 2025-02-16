@@ -267,6 +267,7 @@ public class AuthenController extends HttpServlet {
         if (!newPassword.equals(confirmPassword)) {
             request.setAttribute("error", "Passwords do not match.");
             url = RESET_PASSWORD_PAGE;
+            return url;
         }
 
         User account = User.builder()
