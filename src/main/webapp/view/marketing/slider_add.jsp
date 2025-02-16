@@ -887,7 +887,7 @@
                                 
                               </select>
                           </div>
-                            <div>
+                                <div>
                                 <label for="description" class="form-label fw-bold text-neutral-900"> Post Description </label>
 <!--                                <textarea id="description" name="description" class="form-control border border-neutral-200 radius-8"></textarea>-->
 
@@ -938,15 +938,17 @@
                                            <button class="ql-clean"></button>
                                            </span>
                                        </div>
-                                       <!-- Editor Toolbar Start -->
+                                       <!-- Editor Toolbar End -->
                               
 
-                                       <!-- Editor start -->
-                                       <div  id="editor">
-                                           <p class=""></p>
-                                           <p><br></p>
-                                       </div>
-                                       <!-- Edit End -->
+                                       
+                                        <!-- Editor start -->
+                                        <div  id="editor">
+                                            <p class=""></p>
+
+                                        </div>
+                                        <input type="hidden" id="description" name="description">
+                                       <!-- Editor End -->
                                     </div>
                                 </div>
                             </div>
@@ -1026,6 +1028,7 @@
 <script src="${pageContext.request.contextPath}/assets/js/editor.quill.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/editor.katex.min.js"></script>
 
+
 <script>
     // Editor Js Start
     const quill = new Quill('#editor', {
@@ -1033,11 +1036,18 @@
         syntax: true,
         toolbar: '#toolbar-container',
       },
-      placeholder: 'Compose an epic...',
+      placeholder: '',
       theme: 'snow',
     });
     // Editor Js End
-  
+   quill.on('text-change', function() {
+        document.getElementById('description').value = quill.root.innerHTML;
+    });
+
+    // ??m b?o n?i dung ???c c?p nh?t tr??c khi g?i form
+    document.querySelector('form').onsubmit = function() {
+        document.getElementById('description').value = quill.root.innerHTML;
+    };
 
     // =============================== Upload Single Image js start here ================================================
     const fileInput = document.getElementById("upload-file");

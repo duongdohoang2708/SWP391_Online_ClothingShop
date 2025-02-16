@@ -951,7 +951,7 @@
                 <!-- Nút Deactivate -->
                 <a href="javascript:void(0);" onclick="confirmDeactivate(${story.storyId})" 
                    title="Deactivate">
-                    <i class="ri-delete-bin-line"></i>
+                    <i class="ri-toggle-line"></i>
                 </a>
             </div>
         </td>
@@ -1011,13 +1011,41 @@
                     </main>
                     <script>
                         function confirmDeactivate(storyId) {
-                            if (confirm("Are you sure you want to deactivate this story?")) {
+                            if (confirm("Are you sure you want to deactivate this slider?")) {
                                 window.location.href = '${pageContext.request.contextPath}/manage-story?action=deactivate&id=' + storyId;
                             }
                         }
                     </script>
 
-
+ <script>
+                // Toast message display
+                var toastMessage = "${sessionScope.toastMessage}";
+                var toastType = "${sessionScope.toastType}";
+                if (toastMessage) {
+                    iziToast.show({
+                        title: toastType === 'success' ? 'Success' : 'Error',
+                        message: toastMessage,
+                        position: 'topRight',
+                        color: toastType === 'success' ? 'green' : 'red',
+                        timeout: 5000,
+                        onClosing: function () {
+                            // Remove toast attributes from the session after displaying
+                            fetch('${pageContext.request.contextPath}/remove-toast', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                            }).then(response => {
+                                if (!response.ok) {
+                                    console.error('Failed to remove toast attributes');
+                                }
+                            }).catch(error => {
+                                console.error('Error:', error);
+                            });
+                        }
+                    });
+                }
+            </script>
                     <!-- jQuery library js -->
                     <script src="${pageContext.request.contextPath}/assets/js/lib/jquery-3.7.1.min.js"></script>
                     <!-- Bootstrap js -->
