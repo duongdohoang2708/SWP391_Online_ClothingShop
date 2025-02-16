@@ -93,7 +93,6 @@
                         <div class="tab-pane fade show active" id="pills-edit-profile" role="tabpanel" aria-labelledby="pills-edit-profile-tab" tabindex="0">
 
                             <form action="${pageContext.request.contextPath}/profile" method="POST">
-                                <input type="hidden" name="action" value="update">
                                 <input type="hidden" name="id" value="${user.id}">
                                 <div class="row">
                                     <div class="col-sm-6">

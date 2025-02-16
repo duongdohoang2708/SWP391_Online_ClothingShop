@@ -76,7 +76,12 @@
           <span>Settings Management</span> 
         </a>
       </li>
-    
+      <li>
+        <a href="${pageContext.request.contextPath}/change-password">
+          <iconify-icon icon="icon-park-outline:setting-two" class="menu-icon"></iconify-icon>
+          <span>Change Password</span> 
+        </a>
+      </li>
     </ul>
   </div>
 </aside>

@@ -19,7 +19,7 @@
                             </c:if>
                             <c:if test="${sessionScope.account != null}">
                                 <li><a href="${pageContext.request.contextPath}/authen?action=logout">Logout</a></li>
-                                <li><a href="#">Dashboard</a></li>
+                                <li><a href="${pageContext.request.contextPath}/profile">Dashboard</a></li>
                             </c:if>
                         </ul>
                     </div>
