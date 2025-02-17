@@ -901,11 +901,10 @@
                                            value="${param.search}">
                                 </div>
                                 <div class="col-md-3">
-                                    <button type="submit" style="width: 100%; background-color: #007aff"
-                                            class="form-control text-light">
-                                        <i class="fa fa-search mr-4"></i>
-                                        Filter
+                                    <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center w-100 py-2" style="background: linear-gradient(45deg, #007aff, #0056b3); border: none; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+                                        <i class="fa fa-filter me-2"></i> Filter
                                     </button>
+
                                 </div>
                             </div>
                         </form>
@@ -925,73 +924,73 @@
                                                 <th style="text-align: center;">Action</th>
                                             </tr>
                                         </thead>
-                                       <c:forEach var="story" items="${stories}">
-    <tr>
-        <td>${story.storyId}</td>
-        <td>
-            <img src="${pageContext.request.contextPath}/${story.thumbnail}" 
-                 alt="Story image" class="img-thumbnail" 
-                 style="width: 100px; height: 60px; object-fit: cover;">
-        </td>
-        <td>${story.title}</td>
-        <td>${story.backlink}</td>
-        <td>
-            <span class="dashboard__quiz-result ${story.status == 'Active' ? 'text-success' : 'text-danger'}">
-                ${story.status}
-            </span>
-        </td>
-        <td>${story.description}</td>
-        <td>
-            <div class="dashboard__review-action">
-                <!-- Nút Edit -->
-                <a href="${pageContext.request.contextPath}/manage-story?action=edit&id=${story.storyId}"
-                   title="Edit">
-                    <i class="ri-edit-line"></i> <!-- RemixIcon -->
-                </a>
-                <!-- Nút Deactivate -->
-                <a href="javascript:void(0);" onclick="confirmDeactivate(${story.storyId})" 
-                   title="Deactivate">
-                    <i class="ri-toggle-line"></i>
-                </a>
-            </div>
-        </td>
-    </tr>
-</c:forEach>
+                                        <c:forEach var="story" items="${stories}">
+                                            <tr>
+                                                <td>${story.storyId}</td>
+                                                <td>
+                                                    <img src="${pageContext.request.contextPath}/${story.thumbnail}" 
+                                                         alt="Story image" class="img-thumbnail" 
+                                                         style="width: 100px; height: 60px; object-fit: cover;">
+                                                </td>
+                                                <td>${story.title}</td>
+                                                <td>${story.backlink}</td>
+                                                <td>
+                                                    <span class="dashboard__quiz-result ${story.status == 'Active' ? 'text-success' : 'text-danger'}">
+                                                        ${story.status}
+                                                    </span>
+                                                </td>
+                                                <td class="description-column">${story.description}</td>
+                                                <td>
+                                                    <div class="dashboard__review-action">
+                                                        <!-- Nút Edit -->
+                                                        <a a href="${pageContext.request.contextPath}/manage-story?action=edit&id=${story.storyId}"
+                                                           title="Edit">
+                                                            <i class="ri-edit-line"></i> <!-- RemixIcon -->
+                                                        </a>
+                                                        <!-- Nút Deactivate -->
+                                                        <a href="javascript:void(0);" onclick="confirmDeactivate(${story.storyId})" 
+                                                           title="Deactivate">
+                                                            <i class="ri-toggle-line"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
 
                                     </table>
                                 </div>
 
                                 <!-- Pagination -->
                                 <nav aria-label="Page navigation" style="margin-top: 30px">
-                                                    <ul class="pagination justify-content-center">
-                                                        <c:if test="${currentPage > 1}">
-                                                            <li class="page-item">
-                                                                <a class="page-link"
-                                                                   href="${paginationUrl}&page=${currentPage - 1}"
-                                                                   aria-label="Previous">
-                                                                    <span aria-hidden="true">&laquo;</span>
-                                                                </a>
-                                                            </li>
-                                                        </c:if>
+                                    <ul class="pagination justify-content-center">
+                                        <c:if test="${currentPage > 1}">
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   href="${paginationUrl}&page=${currentPage - 1}"
+                                                   aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                        </c:if>
 
-                                                        <c:forEach begin="1" end="${totalPages}" var="i">
-                                                            <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                                                <a class="page-link"
-                                                                   href="${paginationUrl}&page=${i}">${i}</a>
-                                                            </li>
-                                                        </c:forEach>
+                                        <c:forEach begin="1" end="${totalPages}" var="i">
+                                            <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                                <a class="page-link"
+                                                   href="${paginationUrl}&page=${i}">${i}</a>
+                                            </li>
+                                        </c:forEach>
 
-                                                        <c:if test="${currentPage < totalPages}">
-                                                            <li class="page-item">
-                                                                <a class="page-link"
-                                                                   href="${paginationUrl}&page=${currentPage + 1}"
-                                                                   aria-label="Next">
-                                                                    <span aria-hidden="true">&raquo;</span>
-                                                                </a>
-                                                            </li>
-                                                        </c:if>
-                                                    </ul>
-                                                </nav>
+                                        <c:if test="${currentPage < totalPages}">
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   href="${paginationUrl}&page=${currentPage + 1}"
+                                                   aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </c:if>
+                                    </ul>
+                                </nav>
 
                             </div>
                         </div>
@@ -1017,35 +1016,35 @@
                         }
                     </script>
 
- <script>
-                // Toast message display
-                var toastMessage = "${sessionScope.toastMessage}";
-                var toastType = "${sessionScope.toastType}";
-                if (toastMessage) {
-                    iziToast.show({
-                        title: toastType === 'success' ? 'Success' : 'Error',
-                        message: toastMessage,
-                        position: 'topRight',
-                        color: toastType === 'success' ? 'green' : 'red',
-                        timeout: 5000,
-                        onClosing: function () {
-                            // Remove toast attributes from the session after displaying
-                            fetch('${pageContext.request.contextPath}/remove-toast', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                            }).then(response => {
-                                if (!response.ok) {
-                                    console.error('Failed to remove toast attributes');
+                    <script>
+                        // Toast message display
+                        var toastMessage = "${sessionScope.toastMessage}";
+                        var toastType = "${sessionScope.toastType}";
+                        if (toastMessage) {
+                            iziToast.show({
+                                title: toastType === 'success' ? 'Success' : 'Error',
+                                message: toastMessage,
+                                position: 'topRight',
+                                color: toastType === 'success' ? 'green' : 'red',
+                                timeout: 5000,
+                                onClosing: function () {
+                                    // Remove toast attributes from the session after displaying
+                                    fetch('${pageContext.request.contextPath}/remove-toast', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                    }).then(response => {
+                                        if (!response.ok) {
+                                            console.error('Failed to remove toast attributes');
+                                        }
+                                    }).catch(error => {
+                                        console.error('Error:', error);
+                                    });
                                 }
-                            }).catch(error => {
-                                console.error('Error:', error);
                             });
                         }
-                    });
-                }
-            </script>
+                    </script>
                     <!-- jQuery library js -->
                     <script src="${pageContext.request.contextPath}/assets/js/lib/jquery-3.7.1.min.js"></script>
                     <!-- Bootstrap js -->

@@ -867,118 +867,132 @@
                             </div>
                             <div class="card-body p-24">
                                 <form action="${pageContext.request.contextPath}/manage-story"  method="post" enctype="multipart/form-data" class="d-flex flex-column gap-20">
-                                    <input type="hidden" name="action" value="update"/>
-                                    <input type="hidden" name="id" value="${story.id}">
-                                    <div>
-                                        <label class="form-label fw-bold text-neutral-900" for="title">Post Title: </label>
-                                        <input type="text" class="form-control border border-neutral-200 radius-8" id="title" name="title" value="${story.title}" placeholder="Enter New Post Title">
-                                    </div>
 
+                                    <input type="hidden" name="action" value="update"/>
+                                    <input type="hidden" name="id" value="${story.storyId}">
+
+
+                                    <div>
+                                        <label class="form-label fw-bold text-neutral-900" for="title">Post New Title: </label>
+                                        <input type="text" class="form-control border border-neutral-200 radius-8" id="title" name="title" value="${story.title}" placeholder="Enter Post Title">
+                                    </div>
                                     <div>
                                         <label class="form-label fw-bold text-neutral-900" for="backlink">Backlink URL: </label>
-                                        <input type="url" class="form-control border border-neutral-200 radius-8" id="backlink" name="backlink" value="${story.backlink}" placeholder="Enter New Backlink URL">
+                                        <input type="url" class="form-control border border-neutral-200 radius-8" id="backlink" name="backlink" value="${story.backlink}" placeholder="Enter Backlink URL">
+
                                     </div>
 
 
-
                                     <div>
-        <label class="form-label fw-bold text-neutral-900" for="status">Status</label>
-        <select class="form-control border border-neutral-200 radius-8" id="status" name="status">
-            <option value="Active" ${story.status == 'Active' ? 'selected' : ''}>Active</option>
-            <option value="Inactive" ${story.status == 'Inactive' ? 'selected' : ''}>Inactive</option>
-        </select>
-    </div>
+                                        <label class="form-label fw-bold text-neutral-900" for="status">Status</label>
+                                        <select class="form-control border border-neutral-200 radius-8" id="status" name="status"> 
+                                            <option value="Active" ${story.status == 'Active' ? 'selected' : ''}>Active</option>
+                                            <option value="Inactive" ${story.status == 'Inactive' ? 'selected' : ''}>Inactive</option>
 
+                                        </select>
+                                    </div>
                                     <div>
-                                        <label class="form-label fw-bold text-neutral-900">Post Description </label>
-                                        <div class="border border-neutral-200 radius-8 overflow-hidden">
-                                            <div class="height-200">
-                                                <!-- Editor Toolbar Start -->
-                                                <div id="toolbar-container">
-                                                    <span class="ql-formats">
-                                                        <select class="ql-font"></select>
-                                                        <select class="ql-size"></select>
-                                                    </span>
-                                                    <span class="ql-formats">
-                                                        <button class="ql-bold"></button>
-                                                        <button class="ql-italic"></button>
-                                                        <button class="ql-underline"></button>
-                                                        <button class="ql-strike"></button>
-                                                    </span>
-                                                    <span class="ql-formats">
-                                                        <select class="ql-color"></select>
-                                                        <select class="ql-background"></select>
-                                                    </span>
-                                                    <span class="ql-formats">
-                                                        <button class="ql-script" value="sub"></button>
-                                                        <button class="ql-script" value="super"></button>
-                                                    </span>
-                                                    <span class="ql-formats">
-                                                        <button class="ql-header" value="1"></button>
-                                                        <button class="ql-header" value="2"></button>
-                                                        <button class="ql-blockquote"></button>
-                                                        <button class="ql-code-block"></button>
-                                                    </span>
-                                                    <span class="ql-formats">
-                                                        <button class="ql-list" value="ordered"></button>
-                                                        <button class="ql-list" value="bullet"></button>
-                                                        <button class="ql-indent" value="-1"></button>
-                                                        <button class="ql-indent" value="+1"></button>
-                                                    </span>
-                                                    <span class="ql-formats">
-                                                        <button class="ql-direction" value="rtl"></button>
-                                                        <select class="ql-align"></select>
-                                                    </span>
-                                                    <span class="ql-formats">
-                                                        <button class="ql-link"></button>
-                                                        <button class="ql-image"></button>
-                                                        <button class="ql-video"></button>
-                                                        <button class="ql-formula"></button>
-                                                    </span>
-                                                    <span class="ql-formats">
-                                                        <button class="ql-clean"></button>
-                                                    </span>
-                                                </div>
-                                                <!-- Editor Toolbar Start -->
+                                        <label for="description" class="form-label fw-bold text-neutral-900"> Post Description </label>
 
-                                                <!-- Editor start -->
-                                               <div id="editor">${story.description}</div>
-            <input type="hidden" id="description" name="description" value="${story.description}">
-                                                <!-- Edit End -->
+                                        <div  class="height-200">
+                                            <!-- Editor Toolbar Start -->
+                                            <div  id="toolbar-container">
+                                                <span class="ql-formats">
+                                                    <select class="ql-font"></select>
+                                                    <select class="ql-size"></select>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button class="ql-bold"></button>
+                                                    <button class="ql-italic"></button>
+                                                    <button class="ql-underline"></button>
+                                                    <button class="ql-strike"></button>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <select class="ql-color"></select>
+                                                    <select class="ql-background"></select>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button class="ql-script" value="sub"></button>
+                                                    <button class="ql-script" value="super"></button>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button class="ql-header" value="1"></button>
+                                                    <button class="ql-header" value="2"></button>
+                                                    <button class="ql-blockquote"></button>
+                                                    <button class="ql-code-block"></button>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button class="ql-list" value="ordered"></button>
+                                                    <button class="ql-list" value="bullet"></button>
+                                                    <button class="ql-indent" value="-1"></button>
+                                                    <button class="ql-indent" value="+1"></button>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button class="ql-direction" value="rtl"></button>
+                                                    <select class="ql-align"></select>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button class="ql-link"></button>
+                                                    <button class="ql-image"></button>
+                                                    <button class="ql-video"></button>
+                                                    <button class="ql-formula"></button>
+                                                </span>
+                                                <span class="ql-formats">
+                                                    <button class="ql-clean"></button>
+                                                </span>
                                             </div>
+                                            <!-- Editor Toolbar End -->
+
+
+
+                                            <!-- Editor start -->
+                                            <div  id="editor">
+                                                <p class=""></p>
+
+                                            </div>
+                                            <input type="hidden" id="description" name="description" value="${story.description}">
+                                            <!-- Editor End -->
                                         </div>
                                     </div>
+                                    <div>
+                                        <label for="imageUrl" class="form-label fw-bold text-neutral-900">Upload Thumbnail </label>
+                                        <div class="upload-image-wrapper">
+                                            <!-- Hi?n th? ?nh c? n?u có -->
+                                            <div id="uploaded-img-container" class="position-relative h-160-px w-100 border input-form-light radius-8 overflow-hidden border-dashed bg-neutral-50
+                                                 ${empty slider.imageUrl ? 'd-none' : ''}">
+                                                <button type="button" class="uploaded-img__remove position-absolute top-0 end-0 z-1 text-2xxl line-height-1 me-8 mt-8 d-flex
+                                                        bg-danger-600 w-40-px h-40-px justify-content-center align-items-center rounded-circle">
+                                                    <iconify-icon icon="radix-icons:cross-2" class="text-2xl text-white"></iconify-icon>
+                                                </button>
+                                                <img id="uploaded-img__preview" class="w-100 h-100 object-fit-cover" 
+                                                     src="${not empty slider.imageUrl ? pageContext.request.contextPath + '/assets/images/story/' + story.imageUrl : ''}" 
+                                                     alt="Current Image">
+                                            </div>
 
-                               <div>
-    <label for="imageUrl" class="form-label fw-bold text-neutral-900">Upload Thumbnail</label>
-    <div class="upload-image-wrapper">
-        <div class="uploaded-img ${story.thumbnail == null ? 'd-none' : ''} position-relative h-160-px w-100 border input-form-light radius-8 overflow-hidden border-dashed bg-neutral-50">
-            <button type="button" class="uploaded-img__remove position-absolute top-0 end-0 z-1 text-2xxl line-height-1 me-8 mt-8 d-flex bg-danger-600 w-40-px h-40-px justify-content-center align-items-center rounded-circle">
-                <iconify-icon icon="radix-icons:cross-2" class="text-2xl text-white"></iconify-icon>
-            </button>
-            <img id="uploaded-img__preview" class="w-100 h-100 object-fit-cover" 
-                 src="${story.thumbnail != null ? pageContext.request.contextPath + '/' + story.thumbnail : pageContext.request.contextPath + '/assets/images/user.png'}" 
-                 alt="image">
-        </div>
+                                            <!-- Ch?n ?nh m?i -->
+                                            <label class="upload-file h-160-px w-100 border input-form-light radius-8 overflow-hidden border-dashed bg-neutral-50
+                                                   bg-hover-neutral-200 d-flex align-items-center flex-column justify-content-center gap-1" for="upload-file">
+                                                <iconify-icon icon="solar:camera-outline" class="text-xl text-secondary-light"></iconify-icon>
+                                                <span class="fw-semibold text-secondary-light">Upload</span>
+                                                <input id="upload-file" type="file" name="thumbnail" accept="image/*" hidden>
+                                            </label>
+                                        </div>
 
-        <label class="upload-file h-160-px w-100 border input-form-light radius-8 overflow-hidden border-dashed bg-neutral-50 bg-hover-neutral-200 d-flex align-items-center flex-column justify-content-center gap-1" for="upload-file">
-            <iconify-icon icon="solar:camera-outline" class="text-xl text-secondary-light"></iconify-icon>
-            <span class="fw-semibold text-secondary-light">Upload</span>
-            <input id="upload-file" type="file" name="thumbnail" hidden>
-        </label>
-    </div>
-    <input type="hidden" name="oldThumbnail" value="${story.thumbnail}"> <!-- L?u ?nh c? n?u không thay ??i -->
-</div>
+                                        <!-- ?n giá tr? ?nh c? ?? l?u l?i n?u không có ?nh m?i -->
+                                        <input type="hidden" name="current_image" value="${slider.imageUrl}">
+                                    </div>
 
 
-                                    <button type="submit" class="btn btn-primary-600 radius-8">Update</button>
-    <a href="${pageContext.request.contextPath}/manage-story" class="btn btn-secondary ml-2">Cancel</a>
+                                    <div class="d-flex gap-3 mt-3">
+                                        <button type="submit" class="btn btn-primary-600 radius-8">Update</button>
+                                        <a href="${pageContext.request.contextPath}/manage-story" class="btn btn-secondary ml-2">Cancel</a>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                     </div>
 
-                   
+
                 </div>
 
                 <footer class="d-footer">
@@ -1026,64 +1040,82 @@
         <script src="${pageContext.request.contextPath}/assets/js/editor.quill.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/editor.katex.min.js"></script>
 
-      <script>
-    // ====================== Quill Editor Js Start ======================
-    const quill = new Quill('#editor', {
-        modules: {
-            syntax: true,
-            toolbar: '#toolbar-container',
-        },
-        placeholder: 'Compose an epic...',
-        theme: 'snow',
-    });
+        <script>
+            // Editor Js Start
+            document.addEventListener("DOMContentLoaded", function () {
+                // Kh?i t?o trình so?n th?o Quill
+                const quill = new Quill('#editor', {
+                    modules: {
+                        syntax: true,
+                        toolbar: '#toolbar-container',
+                    },
+                    placeholder: '',
+                    theme: 'snow',
+                });
 
-    // L?y d? li?u t? description n?u có (tr??ng h?p update)
-    const descriptionField = document.getElementById("description");
-    if (descriptionField.value) {
-        quill.root.innerHTML = descriptionField.value; // Load n?i dung c? vào editor
-    }
+                // L?y n?i dung mô t? t? backend và ??t vào editor
+                const descriptionInput = document.getElementById('description');
+                if (descriptionInput.value) {
+                    quill.root.innerHTML = descriptionInput.value; // Hi?n th? mô t? hi?n t?i trong trình so?n th?o
+                }
 
-    // C?p nh?t d? li?u t? editor vào input hidden tr??c khi submit form
-    document.querySelector("form").addEventListener("submit", function() {
-        descriptionField.value = quill.root.innerHTML;
-    });
+                // Khi n?i dung thay ??i, c?p nh?t l?i input ?n ?? l?u d? li?u
+                quill.on('text-change', function () {
+                    descriptionInput.value = quill.root.innerHTML;
+                });
 
-    // ====================== Quill Editor Js End ======================
+                // ??m b?o n?i dung description ???c g?i khi c?p nh?t form
+                document.querySelector('form').onsubmit = function () {
+                    descriptionInput.value = quill.root.innerHTML;
+                };
+            });
+
+            // Editor Js End
+            document.addEventListener("DOMContentLoaded", function () {
+                const fileInput = document.getElementById("upload-file");
+                const imagePreview = document.getElementById("uploaded-img__preview");
+                const uploadedImgContainer = document.getElementById("uploaded-img-container");
+                const removeButton = document.querySelector(".uploaded-img__remove");
+
+                // Hi?n th? ?nh m?i khi ch?n file
+                fileInput.addEventListener("change", function (e) {
+                    if (e.target.files.length) {
+                        const src = URL.createObjectURL(e.target.files[0]);
+                        imagePreview.src = src;
+                        uploadedImgContainer.classList.remove('d-none');
+                    }
+                });
+
+                // Xóa ?nh c? khi nh?n nút "X"
+                removeButton.addEventListener("click", function () {
+                    imagePreview.src = "";
+                    uploadedImgContainer.classList.add('d-none');
+                    fileInput.value = ""; // Reset input file
+                });
+            });
 
 
-    // ====================== Upload Image Update ======================
-    const fileInput = document.getElementById("upload-file");
-    const imagePreview = document.getElementById("uploaded-img__preview");
-    const uploadedImgContainer = document.querySelector(".uploaded-img");
-    const removeButton = document.querySelector(".uploaded-img__remove");
-    const oldThumbnail = document.querySelector("input[name='oldThumbnail']"); // L?u ?nh c?
+            // =============================== Upload Single Image js start here ================================================
+            const fileInput = document.getElementById("upload-file");
+            const imagePreview = document.getElementById("uploaded-img__preview");
+            const uploadedImgContainer = document.querySelector(".uploaded-img");
+            const removeButton = document.querySelector(".uploaded-img__remove");
 
-    // Ki?m tra n?u có ?nh c?, hi?n th? ?nh
-    if (oldThumbnail.value) {
-        uploadedImgContainer.classList.remove('d-none');
-        imagePreview.src = oldThumbnail.value.startsWith("http") ? oldThumbnail.value : 
-            "${pageContext.request.contextPath}/" + oldThumbnail.value;
-    }
+            fileInput.addEventListener("change", (e) => {
+                if (e.target.files.length) {
+                    const src = URL.createObjectURL(e.target.files[0]);
+                    imagePreview.src = src;
+                    uploadedImgContainer.classList.remove('d-none');
+                }
+            });
+            removeButton.addEventListener("click", () => {
+                imagePreview.src = "";
+                uploadedImgContainer.classList.add('d-none');
+                fileInput.value = "";
+            });
+            // =============================== Upload Single Image js End here ================================================
 
-    // Khi ch?n ?nh m?i, thay ??i preview
-    fileInput.addEventListener("change", (e) => {
-        if (e.target.files.length) {
-            const src = URL.createObjectURL(e.target.files[0]);
-            imagePreview.src = src;
-            uploadedImgContainer.classList.remove('d-none');
-        }
-    });
-
-    // Khi nh?n xóa ?nh, ??t l?i ?nh v? tr?ng thái m?c ??nh
-    removeButton.addEventListener("click", () => {
-        imagePreview.src = "${pageContext.request.contextPath}/assets/images/user.png"; // ?nh m?c ??nh
-        uploadedImgContainer.classList.add('d-none');
-        fileInput.value = "";
-        oldThumbnail.value = ""; // Xóa giá tr? ?nh c? ?? tránh g?i lên server
-    });
-
-    // ====================== Upload Image Update End ======================
-</script>
+        </script>
 
     </body>
 

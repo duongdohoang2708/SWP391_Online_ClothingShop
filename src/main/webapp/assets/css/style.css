@@ -15470,4 +15470,12 @@ td.fc-header-center {
     content: "\f170";
 }
 
+    .description-column {
+        max-width: 300px; /* Giới hạn chiều rộng */
+        max-height: 60px; /* Giới hạn chiều cao */
+        overflow: auto; /* Hiển thị thanh cuộn nếu quá dài */
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
 /* === footer css end === */
