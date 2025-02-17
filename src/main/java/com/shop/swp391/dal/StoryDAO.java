@@ -54,21 +54,25 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
 
     @Override
     public boolean delete(Story story) {
-        String sql = "DELETE FROM story WHERE story_id = ?";
-        try {
-            connection = getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, story.getStoryId());
+    String sql = "DELETE FROM story WHERE story_id = ?";
+    try {
+        connection = getConnection();
+        statement = connection.prepareStatement(sql);
+        statement.setInt(1, story.getStoryId());
 
-            int affectedRows = statement.executeUpdate();
-            return affectedRows > 0;
-        } catch (SQLException ex) {
-            System.out.println("Error deleting story: " + ex.getMessage());
-            return false;
-        } finally {
-            closeResources();
-        }
+        int affectedRows = statement.executeUpdate();
+        System.out.println("Delete Query: " + sql + " with story_id=" + story.getStoryId());
+        System.out.println("Rows affected: " + affectedRows);
+        
+        return affectedRows > 0;
+    } catch (SQLException ex) {
+        System.out.println("Error deleting story: " + ex.getMessage());
+        return false;
+    } finally {
+        closeResources();
     }
+}
+
 
     @Override
     public int insert(Story story) {

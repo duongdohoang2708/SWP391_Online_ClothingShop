@@ -32,7 +32,7 @@ import jakarta.servlet.http.Part;
         maxFileSize = 1024 * 1024 * 10, // 10 MB
         maxRequestSize = 1024 * 1024 * 15 // 15 MB
 )
-@WebServlet(name = "ManagerStoryController", urlPatterns = { "/manage-story" })
+@WebServlet(name = "ManagerStoryController", urlPatterns = {"/manage-story"})
 public class ManagerStoryController extends HttpServlet {
 
     private final StoryDAO storyDAO = new StoryDAO();
@@ -51,6 +51,9 @@ public class ManagerStoryController extends HttpServlet {
                     break;
                 case "edit":
                     showEditForm(request, response);
+                    break;
+                case "delete":
+                    deleteStory(request, response);
                     break;
                 case "deactivate":
                     deactivateStory(request, response);
@@ -73,6 +76,7 @@ public class ManagerStoryController extends HttpServlet {
             case "update":
                 updateStory(request, response);
                 break;
+
             default:
                 handleListWithFilters(request, response);
                 break;
@@ -154,8 +158,8 @@ public class ManagerStoryController extends HttpServlet {
         Part filePart = request.getPart("thumbnail");
         String fileName = null;
         if (description == null || description.trim().isEmpty()) {
-    description = "<p>No description provided.</p>"; 
-}
+            description = "<p>No description provided.</p>";
+        }
         if (filePart != null && filePart.getSize() > 0) {
             fileName = System.currentTimeMillis() + "_" + getFileName(filePart);
             String uploadPath = request.getServletContext().getRealPath("") + "assets/images/story";
@@ -202,20 +206,12 @@ public class ManagerStoryController extends HttpServlet {
         String description = request.getParameter("description");
         String status = request.getParameter("status");
 
-//        Part filePart = request.getPart("thumbnail");
-//        if (filePart != null && filePart.getSize() > 0) {
-//            String fileName = System.currentTimeMillis() + "_" + getFileName(filePart);
-//            String uploadPath = request.getServletContext().getRealPath("") + "assets/images/story";
-//            filePart.write(uploadPath + File.separator + fileName);
-//            story.setThumbnail("assets/img/story/" + fileName);
-//        }
-
-if (description == null || description.trim().isEmpty()) {
-    description = "<p>No description provided.</p>"; 
-}
+        if (description == null || description.trim().isEmpty()) {
+            description = "<p>No description provided.</p>";
+        }
         Part filePart = request.getPart("thumbnail");
-        if (filePart != null && filePart.getSize() > 0){
-         if (story.getThumbnail()!= null && !story.getThumbnail().isEmpty()) {
+        if (filePart != null && filePart.getSize() > 0) {
+            if (story.getThumbnail() != null && !story.getThumbnail().isEmpty()) {
                 String oldThumbnailPath = request.getServletContext().getRealPath("") + story.getThumbnail();
                 File oldThumbnail = new File(oldThumbnailPath);
                 if (oldThumbnail.exists()) {
@@ -265,4 +261,54 @@ if (description == null || description.trim().isEmpty()) {
     private String getFileName(Part part) {
         return part.getSubmittedFileName();
     }
+
+    private void deleteStory(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
+        // Lấy storyId từ request
+        int storyId;
+        try {
+            storyId = Integer.parseInt(request.getParameter("id"));
+        } catch (NumberFormatException e) {
+            session.setAttribute("toastMessage", "Invalid story ID!");
+            session.setAttribute("toastType", "error");
+            response.sendRedirect(request.getContextPath() + "/manage-story");
+            return;
+        }
+
+        // Tìm kiếm story trong DB
+        Story story = storyDAO.findById(storyId);
+        if (story == null) {
+            session.setAttribute("toastMessage", "Story not found!");
+            session.setAttribute("toastType", "error");
+            response.sendRedirect(request.getContextPath() + "/manage-story");
+            return;
+        }
+
+        // Nếu story có ảnh, xóa ảnh trước
+        if (story.getThumbnail() != null && !story.getThumbnail().isEmpty()) {
+            String imagePath = request.getServletContext().getRealPath("") + story.getThumbnail();
+            File imageFile = new File(imagePath);
+            if (imageFile.exists() && imageFile.delete()) {
+                System.out.println("Deleted image: " + story.getThumbnail());
+            } else {
+                System.out.println("Failed to delete image: " + story.getThumbnail());
+            }
+        }
+
+        // Xóa story khỏi database
+        boolean result = storyDAO.delete(story);
+        if (result) {
+            session.setAttribute("toastMessage", "Story deleted successfully!");
+            session.setAttribute("toastType", "success");
+        } else {
+            session.setAttribute("toastMessage", "Failed to delete story!");
+            session.setAttribute("toastType", "error");
+        }
+
+        // Chuyển hướng về danh sách story
+        response.sendRedirect(request.getContextPath() + "/manage-story");
+    }
+
 }

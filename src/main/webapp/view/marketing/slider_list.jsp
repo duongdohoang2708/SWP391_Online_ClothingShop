@@ -943,14 +943,18 @@
                                                 <td>
                                                     <div class="dashboard__review-action">
                                                         <!-- Nút Edit -->
-                                                        <a a href="${pageContext.request.contextPath}/manage-story?action=edit&id=${story.storyId}"
-                                                           title="Edit">
+                                                        <a  href="${pageContext.request.contextPath}/manage-story?action=edit&id=${story.storyId}"
+                                                            title="Edit">
                                                             <i class="ri-edit-line"></i> <!-- RemixIcon -->
                                                         </a>
                                                         <!-- Nút Deactivate -->
                                                         <a href="javascript:void(0);" onclick="confirmDeactivate(${story.storyId})" 
                                                            title="Deactivate">
                                                             <i class="ri-toggle-line"></i>
+                                                        </a>
+                                                        <a href="${pageContext.request.contextPath}/manage-story?action=delete&id=${story.storyId}" 
+                                                           title="Delete">
+                                                            <i class="ri-delete-bin-line" style="color: red;"></i>
                                                         </a>
                                                     </div>
                                                 </td>
@@ -1014,6 +1018,8 @@
                                 window.location.href = '${pageContext.request.contextPath}/manage-story?action=deactivate&id=' + storyId;
                             }
                         }
+
+                      
                     </script>
 
                     <script>
