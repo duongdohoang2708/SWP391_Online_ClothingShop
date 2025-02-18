@@ -34,6 +34,14 @@ public class Blog {
         this.status = status;
     }
 
+    public Blog(String title, String string, String string0, String content, int i, int i0, String active) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public Blog(int id, String title, String string, String string0, String content, int i, int i0, String active) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public int getId() {
         return id;
     }

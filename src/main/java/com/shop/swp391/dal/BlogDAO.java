@@ -20,6 +20,7 @@ public class BlogDAO extends DBContext implements I_DAO<Blog> {
         String sql = "SELECT * FROM blog";
 
         try {
+            connection = getConnection();
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -37,6 +38,7 @@ public class BlogDAO extends DBContext implements I_DAO<Blog> {
     public boolean update(Blog blog) {
         String sql = "UPDATE blog SET title = ?, thumbnail = ?, brief_info = ?, content = ?, category_id = ?, author = ?, status = ? WHERE id = ?";
         try {
+            connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setString(1, blog.getTitle());
             statement.setString(2, blog.getThumbnail());
@@ -59,6 +61,7 @@ public class BlogDAO extends DBContext implements I_DAO<Blog> {
     public boolean delete(Blog blog) {
         String sql = "DELETE FROM blog WHERE id = ?";
         try {
+            connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, blog.getId());
             return statement.executeUpdate() > 0;
@@ -74,6 +77,7 @@ public class BlogDAO extends DBContext implements I_DAO<Blog> {
     public int insert(Blog blog) {
         String sql = "INSERT INTO blog (title, thumbnail, brief_info, content, category_id, author, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
+            connection = getConnection();
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, blog.getTitle());
             statement.setString(2, blog.getThumbnail());
@@ -117,6 +121,7 @@ public class BlogDAO extends DBContext implements I_DAO<Blog> {
     public Blog findById(int id) {
         String sql = "SELECT * FROM blog WHERE id = ?";
         try {
+            connection = getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
