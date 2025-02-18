@@ -423,13 +423,11 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li>
-                                <a href="view/maketing/slider_list.jsp"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Slider list</a>
+                                <a href="${pageContext.request.contextPath}/manage-story"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Slider list</a>
                             </li>
 
 
-                            <li>
-                                <a href="view/maketing/slider_details.jsp"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Slider Details</a>
-                            </li>
+                            
                             <li>
                                 <a a href="${pageContext.request.contextPath}/manage-story?action=add"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add Slider</a>
                             </li>
