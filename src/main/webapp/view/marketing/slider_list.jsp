@@ -43,33 +43,51 @@
         <!-- main css -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
         <style>
+            /*            .description-column {
+                            max-width: 300px;  Chiều rộng tối đa 
+                            max-height: 300px;  Chiều cao tối đa 
+                            min-height: 100px;  Đảm bảo chiều cao tối thiểu để ô luôn đủ lớn 
+                            display: flex;
+                            overflow: hidden;  Ẩn phần nội dung vượt quá 
+                            display: -webkit-box;
+                            -webkit-line-clamp: 3;  Giới hạn tối đa 3 dòng 
+                            -webkit-box-orient: vertical;
+                            white-space: normal;
+                            cursor: pointer;  Hiển thị con trỏ khi di chuột vào 
+                            padding: 10px;  Giúp ô trông cân đối 
+                            word-wrap: break-word;  Đảm bảo xuống dòng 
+                            background: white;
+                            
+                        }
+            
+                         Khi di chuột vào sẽ hiển thị đầy đủ 
+                        .description-column:hover {
+                             max-width:300px; 
+                            max-height: auto;  Bỏ giới hạn chiều cao 
+                            overflow-y: auto;  Chỉ hiển thị thanh cuộn dọc nếu cần 
+                overflow-x: hidden;  Ngăn thanh cuộn ngang 
+                            white-space: normal;
+                            background: #fff;  Có thể thêm nền trắng để dễ đọc 
+                            position: absolute;  Hiển thị nội dung nổi lên trên 
+                             word-wrap: break-word;  Đảm bảo xuống dòng 
+                            z-index: 10;
+                            padding: 10px;
+                            background: white;*/
+
             .description-column {
-                max-width: 300px; /* Chiều rộng tối đa */
-                max-height: 300px; /* Chiều cao tối đa */
-                min-height: 100px; /* Đảm bảo chiều cao tối thiểu để ô luôn đủ lớn */
-                display: flex;
-                overflow: hidden; /* Ẩn phần nội dung vượt quá */
-                display: -webkit-box;
-                -webkit-line-clamp: 3; /* Giới hạn tối đa 3 dòng */
-                -webkit-box-orient: vertical;
+                max-width: 300px;
+                max-height: 300px;
+                min-height: 250px;
+                min-width: 300px;
+                overflow-y: auto;  /* Hiển thị thanh cuộn dọc khi nội dung dài */
+                overflow-x: hidden; /* Ẩn thanh cuộn ngang */
                 white-space: normal;
-                cursor: pointer; /* Hiển thị con trỏ khi di chuột vào */
-                padding: 10px; /* Giúp ô trông cân đối */
                 word-wrap: break-word; /* Đảm bảo xuống dòng */
+                padding: 10px;
+                background: #fff; /* Giữ nền trắng */
             }
 
-            /* Khi di chuột vào sẽ hiển thị đầy đủ */
-            .description-column:hover {
-                max-width: 280px;
-                max-height: none; /* Bỏ giới hạn chiều cao */
-                overflow: visible; /* Hiển thị đầy đủ nội dung */
-                white-space: normal;
-                background: #fff; /* Có thể thêm nền trắng để dễ đọc */
-                position: absolute; /* Hiển thị nội dung nổi lên trên */
-                z-index: 10;
-                padding: 10px;
-                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            }
+
         </style>
 
 
