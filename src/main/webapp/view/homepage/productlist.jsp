@@ -8,8 +8,11 @@
 <!doctype html>
 <html class="no-js" lang="en">
     <%@page import="java.util.List"%>
+    <%@page import="java.util.ArrayList" %>
     <%@page import="java.util.Map"%>
     <%@page import="com.shop.swp391.entity.Product"%>
+    <%@page import="com.shop.swp391.entity.Color"%>
+    <%@page import="com.shop.swp391.entity.ProductImg"%>
     <!-- Mirrored from htmldemo.net/clothing/clothing/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Feb 2025 03:37:06 GMT -->
     <head>
         <meta charset="utf-8">
@@ -30,10 +33,17 @@
 
         </head>
     <% 
-        List<Product> products = (List<Product>) request.getAttribute("products"); 
-        Map<Integer, String> productImages = (Map<Integer, String>) request.getAttribute("productImages");
-        int currentPage = (int) request.getAttribute("currentPage");
-        int totalPages = (int) request.getAttribute("totalPages");
+   List<Product> products = (List<Product>) request.getAttribute("products");
+   Map<Integer, String> productImages = (Map<Integer, String>) request.getAttribute("productImages");
+   int currentPage = (int) request.getAttribute("currentPage");
+   int totalPages = (int) request.getAttribute("totalPages");
+   int pagesToShow = 5;
+   int halfPagesToShow = pagesToShow / 2;
+   int startPage = Math.max(1, currentPage - halfPagesToShow);
+   int endPage = Math.min(totalPages, startPage + pagesToShow - 1);
+   if (endPage - startPage + 1 < pagesToShow) {
+       startPage = Math.max(1, endPage - pagesToShow + 1);
+   }
     %>
     <body>
         <!--[if lt IE 8]>
@@ -71,115 +81,119 @@
                                         <div class="shop-area-top">
                                             <div class="row">
                                                 <div class="col-xl-6 col-lg-9 col-md-9">
-                                                    <div class="sort product-show">
-                                                        <label>View</label>
-                                                        <select id="input-amount">
-                                                            <option value="volvo">10</option>
-                                                            <option value="saab">15</option>
-                                                            <option value="vw">20</option>
-                                                            <option value="audi" selected>25</option>
-                                                        </select>
-                                                    </div>
                                                     <div class="sort product-type">
                                                         <label>Sort By</label>
-                                                        <select id="input-sort">
-                                                            <option value="#" selected>Default</option>
-                                                            <option value="#">Name (A - Z)</option>
-                                                            <option value="#">Name (Z - A)</option>
-                                                            <option value="#">Price (Low &gt; High)</option>
-                                                            <option value="#">Price (High &gt; Low)</option>
-                                                            <option value="#">Rating (Highest)</option>
-                                                            <option value="#">Rating (Lowest)</option>
-                                                            <option value="#">Model (A - Z)</option>
-                                                            <option value="#">Model (Z - A)</option>
-                                                        </select>
-                                                    </div>
+                                                        <select id="input-sort" onchange="location = this.value;">
+                                                            <option value="products?page=${currentPage}&sortBy=default" ${sortBy == 'default' ? 'selected' : ''}>Default</option>
+                                                        <option value="products?page=${currentPage}&sortBy=name_asc" ${sortBy == 'name_asc' ? 'selected' : ''}>Name (A - Z)</option>
+                                                        <option value="products?page=${currentPage}&sortBy=name_desc" ${sortBy == 'name_desc' ? 'selected' : ''}>Name (Z - A)</option>
+                                                        <option value="products?page=${currentPage}&sortBy=price_asc" ${sortBy == 'price_asc' ? 'selected' : ''}>Price (Low > High)</option>
+                                                        <option value="products?page=${currentPage}&sortBy=price_desc" ${sortBy == 'price_desc' ? 'selected' : ''}>Price (High > Low)</option>
+                                                    </select>
                                                 </div>
-                                                <div class="col-xl-3 col-lg-3 col-md-3">
-                                                    <div class="list-grid-view text-center">
-                                                        <ul class="nav" role="tablist">
-                                                            <li role="presentation"><a class="active" href="#grid" aria-controls="grid"
-                                                                                       role="tab" data-bs-toggle="tab"><i class="zmdi zmdi-widgets"></i></a>
-                                                            </li>
-                                                            <li role="presentation"><a href="#list" aria-controls="list" role="tab"
-                                                                                       data-bs-toggle="tab"><i class="zmdi zmdi-view-list-alt"></i></a></li>
-                                                        </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-lg-12">
+                                    <div class="shop-total-product-area clearfix mt-35">
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane fade show active" id="grid">
+                                                <div class="total-shop-product-grid row">
+                                                    <% if (products != null && !products.isEmpty()) { %>
+                                                    <% for (Product product : products) { %>
+                                                    <div class="col-lg-4 col-md-6 item">
+                                                        <div class="single-product">
+                                                            <div class="product-img">
+                                                                <div class="product-label red">
+                                                                    <div class="new">New</div>
+                                                                </div>
+                                                                <div class="single-prodcut-img product-overlay pos-rltv">
+                                                                    <a href="product-detail?productID=<%= product.getProductID() %>">
+                                                                        <img alt="" src="<%= productImages.get(product.getProductID()) %>" class="primary-image">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product-text">
+                                                                <div class="prodcut-name">
+                                                                    <a href="product-detail?productID=<%= product.getProductID() %>">
+                                                                        <%= product.getProductName() %>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="prodcut-ratting-price">
+                                                                    <div class="prodcut-price">
+                                                                        <div class="new-price"> $<%= product.getPrice() %> </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-3 d-lg-none d-xl-block d-none">
-                                                    <div class="total-showing text-end">
-                                                        Showing - <span>10</span> to <span>18</span> Of Total <span>36</span>
-                                                    </div>
+                                                    <% } %>
+                                                    <% } else { %>
+                                                    <p>No products available.</p>
+                                                    <% } %>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-lg-12">
-                                        <div class="shop-total-product-area clearfix mt-35">
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade show active" id="grid">
-                <div class="total-shop-product-grid row">
-                    <% for (Product product : (List<Product>) request.getAttribute("products")) { %>
-                    <div class="col-lg-4 col-md-6 item">
-                        <div class="single-product">
-                            <div class="product-img">
-                                <div class="product-label red">
-                                    <div class="new">New</div>
-                                </div>
-                                <div class="single-prodcut-img product-overlay pos-rltv">
-                                    <a href="single-product.jsp?productID=<%= product.getProductID() %>">
-                                        <img alt="" src="<%= ((Map<Integer, String>) request.getAttribute("productImages")).get(product.getProductID()) %>" class="primary-image">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="product-text">
-                                <div class="prodcut-name">
-                                    <a href="single-product.jsp?productID=<%= product.getProductID() %>">
-                                        <%= product.getProductName() %>
-                                    </a>
-                                </div>
-                                <div class="prodcut-ratting-price">
-                                    <div class="prodcut-price">
-                                        <div class="new-price"> $<%= product.getPrice() %> </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <% } %>
-                </div>
-            </div>
-        </div>
-    </div>
                                     <div class="pagination-btn text-center mt-4">
                                         <ul class="page-numbers">
                                             <!-- Previous Button -->
                                             <% if (currentPage > 1) { %>
-                                            <li><a href="products?page=<%= currentPage - 1 %>" class="next page-numbers">
-                                                    <i class="zmdi zmdi-long-arrow-left"></i></a>
+                                            <li>
+                                                <a href="products?page=<%= currentPage - 1 %>" class="next page-numbers">
+                                                    <i class="zmdi zmdi-long-arrow-left"></i>
+                                                </a>
                                             </li>
                                             <% } else { %>
-                                            <li class="disabled"><span class="page-numbers"><i class="zmdi zmdi-long-arrow-left"></i></span></li>
-                                                    <% } %>
-
-                                            <!-- Page Numbers -->
-                                            <% for (int i = 1; i <= totalPages; i++) { %>
-                                            <% if (i == currentPage) { %>
-                                            <li><span class="page-numbers current"><%= i %></span></li>
-                                                <% } else { %>
-                                            <li><a href="products?page=<%= i %>" class="page-numbers"><%= i %></a></li>
+                                            <li class="disabled">
+                                                <span class="page-numbers">
+                                                    <i class="zmdi zmdi-long-arrow-left"></i>
+                                                </span>
+                                            </li>
+                                            <% } %>
+                                            <% if (startPage > 1) { %>
+                                            <li>
+                                                <a href="products?page=1" class="page-numbers">1</a>
+                                            </li>
+                                            <% if (startPage > 2) { %>
+                                            <li><span class="page-numbers">...</span></li>
                                                 <% } %>
                                                 <% } %>
-
-                                            <!-- Next Button -->
+                                                <% for (int i = startPage; i <= endPage; i++) { %>
+                                                <% if (i == currentPage) { %>
+                                            <li>
+                                                <span class="page-numbers current"><%= i %></span>
+                                            </li>
+                                            <% } else { %>
+                                            <li>
+                                                <a href="products?page=<%= i %>" class="page-numbers"><%= i %></a>
+                                            </li>
+                                            <% } %>
+                                            <% } %>
+                                            <% if (endPage < totalPages) { %>
+                                            <% if (endPage < totalPages - 1) { %>
+                                            <li><span class="page-numbers">...</span></li>
+                                                <% } %>
+                                            <li>
+                                                <a href="products?page=<%= totalPages %>" class="page-numbers"><%= totalPages %></a>
+                                            </li>
+                                            <% } %>
                                             <% if (currentPage < totalPages) { %>
-                                            <li><a href="products?page=<%= currentPage + 1 %>" class="next page-numbers">
-                                                    <i class="zmdi zmdi-long-arrow-right"></i></a>
+                                            <li>
+                                                <a href="products?page=<%= currentPage + 1 %>" class="next page-numbers">
+                                                    <i class="zmdi zmdi-long-arrow-right"></i>
+                                                </a>
                                             </li>
                                             <% } else { %>
-                                            <li class="disabled"><span class="page-numbers"><i class="zmdi zmdi-long-arrow-right"></i></span></li>
-                                                    <% } %>
+                                            <li class="disabled">
+                                                <span class="page-numbers">
+                                                    <i class="zmdi zmdi-long-arrow-right"></i>
+                                                </span>
+                                            </li>
+                                            <% } %>
                                         </ul>
                                     </div>
                                 </div>
@@ -191,97 +205,27 @@
                         <div class="col-lg-3 col-md-4 order-lg-1 order-md-1 order-2">
                             <div class="shop-sidebar">
                                 <!--single aside start-->
-                               
+
                                 <!--single aside end-->
 
                                 <!--single aside start-->
-                                <aside class="single-aside catagories-aside">
-                                    <div class="heading-title aside-title pos-rltv">
-                                        <h5 class="uppercase">categories</h5>
-                                    </div>
-                                    <div id="cat-treeview" class="product-cat">
-                                        <ul>
-                                            <li class="closed"><a href="#">Men (05)</a>
-                                                <ul>
-                                                    <li><a href="#">T-Shirt</a></li>
-                                                    <li><a href="#">Shirt</a></li>
-                                                    <li><a href="#">Pant</a></li>
-                                                    <li><a href="#">Shoe</a></li>
-                                                    <li><a href="#">Gifts</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="closed"><a href="#">Women (10)</a>
-                                                <ul>
-                                                    <li><a href="#">T-Shirt</a>
-                                                        <ul>
-                                                            <li><a href="#">T-Shirt 01</a></li>
-                                                            <li><a href="#">T-Shirt 02</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Shirt</a>
-                                                        <ul>
-                                                            <li><a href="#">Shirt 01</a></li>
-                                                            <li><a href="#">Shirt 02</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Pant</a>
-                                                        <ul>
-                                                            <li><a href="#">Pant 01</a></li>
-                                                            <li><a href="#">Pant 02</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Shoe</a>
-                                                        <ul>
-                                                            <li><a href="#">Shoe 01</a></li>
-                                                            <li><a href="#">Shoe 02</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><a href="#">Gifts</a>
-                                                        <ul>
-                                                            <li><a href="#">Gift 01</a></li>
-                                                            <li><a href="#">Gift 02</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="closed"><a href="#">Accessories (07)</a>
-                                                <ul>
-                                                    <li><a href="#">Accessories 01</a></li>
-                                                    <li><a href="#">Accessories 02</a></li>
-                                                    <li><a href="#">Accessories 03</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="closed"><a href="#">Beauty (06)</a>
-                                                <ul>
-                                                    <li><a href="#">Beauty 01</a></li>
-                                                    <li><a href="#">Beauty 02</a></li>
-                                                    <li><a href="#">Beauty 03</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="closed"><a href="#">Watch (09)</a>
-                                                <ul>
-                                                    <li><a href="#">Watch 01</a></li>
-                                                    <li><a href="#">Watch 02</a></li>
-                                                    <li><a href="#">Watch 03</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="closed"><a href="#">Sports</a></li>
-                                            <li class="closed"><a href="#">Others</a></li>
-                                        </ul>
-                                    </div>
-                                </aside>
+
                                 <!--single aside end-->
 
                                 <!--single aside start-->
                                 <aside class="single-aside price-aside fix">
                                     <div class="heading-title aside-title pos-rltv">
-                                        <h5 class="uppercase">price</h5>
+                                        <h5 class="uppercase">Price</h5>
                                     </div>
                                     <div class="price_filter">
                                         <div id="slider-range"></div>
                                         <div class="price_slider_amount">
-                                            <input type="text" id="amount" name="price" placeholder="Add Your Price" />
-                                            <input type="submit" value="Filter" />
+                                            <form id="priceFilterForm" action="products" method="GET">
+                                                <input type="hidden" id="minPrice" name="minPrice" />
+                                                <input type="hidden" id="maxPrice" name="maxPrice" />
+                                                <input type="text" id="amount" name="price" placeholder="Add Your Price" readonly />
+                                                <input type="submit" value="Filter" />
+                                            </form>
                                         </div>
                                     </div>
                                 </aside>
@@ -293,16 +237,27 @@
                                         <h5 class="uppercase">Color</h5>
                                     </div>
                                     <ul class="color-filter mt-30">
-                                        <li><a href="#" class="color-1"></a></li>
-                                        <li><a href="#" class="color-2 active"></a></li>
-                                        <li><a href="#" class="color-3"></a></li>
-                                        <li><a href="#" class="color-4"></a></li>
-                                        <li><a href="#" class="color-5"></a></li>
-                                        <li><a href="#" class="color-6"></a></li>
-                                        <li><a href="#" class="color-7"></a></li>
-                                        <li><a href="#" class="color-8"></a></li>
-                                        <li><a href="#" class="color-9"></a></li>
+                                        <li><a href="products?color=1" style="background-color: white; border: 2px solid #ccc;"></a></li> <!-- White -->
+                                        <li><a href="products?color=2" style="background-color: blue;"></a></li> <!-- Blue -->
+                                        <li><a href="products?color=3" style="background-color: black;"></a></li> <!-- Black -->
+                                        <li><a href="products?color=4" style="background-color: grey;"></a></li> <!-- Grey -->
+                                        <li><a href="products?color=5" style="background-color: green;"></a></li> <!-- Green -->
+                                        <li><a href="products?color=6" style="background-color: brown;"></a></li> <!-- Brown -->
+                                        <li><a href="products?color=7" style="background-color: orange;"></a></li> <!-- Orange -->
+                                        <li><a href="products?color=8" style="background-color: pink;"></a></li> <!-- Pink -->
+                                        <li><a href="products?color=9" style="background-color: tan;"></a></li> <!-- Tan -->
+                                        <li><a href="products?color=10" style="background-color: red;"></a></li> <!-- Red -->
                                     </ul>
+                                    <br>
+                                    <div class="clear-filter">
+                                        <a href="products" class="clear-btn" 
+                                           style="display: inline-block; padding: 8px 15px; background-color: #ff4d4d; color: white;
+                                           text-decoration: none; border-radius: 5px; font-weight: bold; transition: 0.3s;"
+                                           onmouseover="this.style.backgroundColor = '#d43f3f';" 
+                                           onmouseout="this.style.backgroundColor = '#ff4d4d';">
+                                            Clear 
+                                        </a>
+                                    </div>
                                 </aside>
                                 <!--single aside end-->
 
