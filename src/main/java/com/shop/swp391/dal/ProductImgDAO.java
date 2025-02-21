@@ -59,19 +59,33 @@ public class ProductImgDAO extends DBContext implements I_DAO<ProductImg> {
                 rs.getString("product_img_name")
         );
     }
+
     public String getProductThumbnail(int productId) {
-        String sql = "SELECT thumbnail FROM product_img WHERE productImgID = ? LIMIT 1";
+       String sql = "SELECT pi.thumbnail FROM product_img pi " +
+                 "JOIN variation v ON pi.product_img_ID = v.product_img_ID " +
+                 "WHERE v.ProductID = ? LIMIT 1"; 
         try {
             connection = new DBContext().getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, productId);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getString("thumbnail");
+                return "assets/home/images/product/" + resultSet.getString("thumbnail"); 
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return "images/default.jpg"; 
+        return "assets/home/images/product/default.jpg";
     }
+
+    public static void main(String[] args) {
+        ProductImgDAO productImgDAO = new ProductImgDAO();
+        int testProductId = 15;
+        for(int i=0;i<72;i++){
+        String imagePath = productImgDAO.getProductThumbnail(i);
+        System.out.println("Image path for ProductImgID " + testProductId + ": " + imagePath);
+        }
+       // System.out.println("Image path for ProductImgID " + testProductId + ": " + imagePath);
+    }
+
 }
