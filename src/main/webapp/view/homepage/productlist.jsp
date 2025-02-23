@@ -59,14 +59,7 @@
 
                 <!--breadcumb area start -->
                 <div class="breadcumb-area breadcumb-2 overlay pos-rltv">
-                    <div class="bread-main">
-                        <div class="bred-hading text-center">
-                            <h5>Product Grid View</h5> </div>
-                        <ol class="breadcrumb">
-                            <li class="home"><a title="Go to Home Page" href="home">Home</a></li>
-                            <li class="active">Shop</li>
-                        </ol>
-                    </div>
+
                 </div>
                 <!--breadcumb area end -->
 
@@ -112,7 +105,7 @@
                                                                 </div>
                                                                 <div class="single-prodcut-img product-overlay pos-rltv">
                                                                     <a href="product-detail?productID=<%= product.getProductID() %>">
-                                                                        <img alt="" src="<%= productImages.get(product.getProductID()) %>" class="primary-image">
+                                                                        <img alt="" src="<%= productImages.get(product.getProductID()) %>" class="primary-image" style="width: 200px; height: 200px; object-fit: cover;">
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -229,6 +222,33 @@
                                         </div>
                                     </div>
                                 </aside>
+                                <script>
+                                    $(function () {
+                                        $("#slider-range").slider({
+                                            range: true,
+                                            min: 0,
+                                            max: 1000000, 
+                                            values: [0, 1000000], 
+                                            step: 1000, 
+                                            slide: function (event, ui) {
+                                                $("#amount").val("$" + ui.values[0].toLocaleString() + " - $" + ui.values[1].toLocaleString());
+                                                $("#minPrice").val(ui.values[0]);
+                                                $("#maxPrice").val(ui.values[1]);
+                                            }
+                                        });
+
+                                        $("#amount").val("$" + $("#slider-range").slider("values", 0).toLocaleString() +
+                                                " - $" + $("#slider-range").slider("values", 1).toLocaleString());
+                                        $("#minPrice").val($("#slider-range").slider("values", 0));
+                                        $("#maxPrice").val($("#slider-range").slider("values", 1));
+
+                                        $("#priceFilterForm").submit(function () {
+                                            $("#minPrice").val($("#slider-range").slider("values", 0));
+                                            $("#maxPrice").val($("#slider-range").slider("values", 1));
+                                        });
+                                    });
+                                </script>
+
                                 <!--single aside end-->
 
                                 <!--single aside start-->
