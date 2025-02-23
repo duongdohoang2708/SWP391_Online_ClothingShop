@@ -47,7 +47,7 @@
         <!--Sidebar-->
         <jsp:include page="../../common/dashboard/sidebar-dashboard.jsp"></jsp:include>
             <main class="dashboard-main">
-            <!--header-->
+                <!--header-->
             <jsp:include page="../../common/dashboard/header-dashboard.jsp"></jsp:include>
                 <div class="dashboard-main-body">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
@@ -147,25 +147,22 @@
                                                     ${story.description}
                                                 </td>
                                                 <td>
-                                                    <div class="dashboard__review-action">
+                                                    <div class="dashboard__review-action d-flex align-items-center gap-2">
                                                         <!-- Nút Edit -->
-                                                        <a  href="${pageContext.request.contextPath}/manage-story?action=edit&id=${story.storyId}"
-                                                            title="Edit">
+                                                        <a href="${pageContext.request.contextPath}/manage-story?action=edit&id=${story.storyId}" title="Edit">
                                                             <i class="ri-edit-line fs-3"></i>
-
                                                         </a>
                                                         <!-- Nút Deactivate -->
-                                                        <a href="javascript:void(0);" onclick="confirmDeactivate(${story.storyId})" 
-                                                           title="Deactivate">
-                                                            <i class="ri-close-circle-line text-danger fs-3"></i> <!-- Đường viền -->
-
+                                                        <a href="javascript:void(0);" onclick="confirmDeactivate(${story.storyId})" title="Deactivate">
+                                                            <i class="ri-close-circle-line text-danger fs-3"></i>
                                                         </a>
-                                                        <a href="${pageContext.request.contextPath}/manage-story?action=delete&id=${story.storyId}" 
-                                                           title="Delete">
-                                                            <i class="ri-delete-bin-line fs-3" style="color: red;"></i>
+                                                        <!-- Nút Delete -->
+                                                        <a href="${pageContext.request.contextPath}/manage-story?action=delete&id=${story.storyId}" title="Delete">
+                                                            <i class="ri-delete-bin-line fs-3 text-danger"></i>
                                                         </a>
                                                     </div>
                                                 </td>
+
                                             </tr>
                                         </c:forEach>
 
