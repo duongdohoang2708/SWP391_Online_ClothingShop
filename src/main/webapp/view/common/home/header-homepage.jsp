@@ -5,15 +5,22 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <header class="header-area header-wrapper">
     <div class="header-top-bar black-bg clearfix">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-6">
                     <div class="login-register-area">
-                        <ul>
-                            <li><a href="#">Login</a></li>
-                            <li><a href="#">Register</a></li>
+                        <ul >
+                            <c:if test="${sessionScope.account == null}">
+                                <li><a href="${pageContext.request.contextPath}/authen?action=login">Login</a></li>
+                                <li><a href="${pageContext.request.contextPath}/authen?action=sign-up">Register</a></li>
+                            </c:if>
+                            <c:if test="${sessionScope.account != null}">
+                                <li><a href="${pageContext.request.contextPath}/authen?action=logout">Logout</a></li>
+                                <li><a href="${pageContext.request.contextPath}/profile">Dashboard</a></li>
+                            </c:if>
                         </ul>
                     </div>
                 </div>

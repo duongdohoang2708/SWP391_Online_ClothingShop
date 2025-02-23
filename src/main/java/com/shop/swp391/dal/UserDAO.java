@@ -130,7 +130,7 @@ public class UserDAO extends DBContext implements I_DAO<User> {
         } catch (Exception ex) {
             System.out.println("Error inserting account: " + ex.getMessage());
             return -1;
-        } finally{
+        } finally {
             closeResources();
         }
     }
@@ -274,6 +274,65 @@ public class UserDAO extends DBContext implements I_DAO<User> {
             closeResources();
         }
     }
+
+    public User findByEmailOrUsernameAndPass(User account) {
+        String sql = "SELECT * FROM SWP391_FASHION_SHOP.user WHERE (Email = ? OR UserName = ?) AND Password = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, account.getEmail());
+            statement.setString(2, account.getUsername());
+            statement.setString(3, account.getPassword());
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return getFromResultSet(resultSet);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error finding user by email/username and password: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return null;
+    }
+    
+    public User findByEmail(User account) {
+        String sql = "SELECT * FROM SWP391_FASHION_SHOP.user WHERE Email = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, account.getEmail());
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return getFromResultSet(resultSet);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error finding user by email: " + ex.getMessage());
+        } finally {
+            closeResources();
+        }
+        return null;
+    }
+    
+
+    public boolean updatePassword(User account) {
+        String sql = "UPDATE SWP391_FASHION_SHOP.user SET Password = ? WHERE Email = ? OR UserName = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, account.getPassword()); // Cần mã hóa mật khẩu trước khi lưu
+            statement.setString(2, account.getEmail());
+            statement.setString(3, account.getUsername());
+    
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException ex) {
+            System.err.println("Error updating password: " + ex.getMessage());
+            return false;
+        } finally {
+            closeResources();
+        }
+    }
+    
 
     @Override
     public User getFromResultSet(ResultSet rs) throws SQLException {
