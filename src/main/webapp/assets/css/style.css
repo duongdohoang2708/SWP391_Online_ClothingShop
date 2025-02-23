@@ -15454,31 +15454,7 @@ td.fc-header-center {
   margin-block-start: auto;
 }
 
-.description-column {
-    max-width: 250px; 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; 
-    cursor: pointer;
-    display: inline-block;
-}
 
-.description-column:hover::after {
-    content: attr(data-tooltip); /* Hiển thị nội dung đầy đủ */
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.75);
-    color: #fff;
-    padding: 8px;
-    border-radius: 5px;
-    white-space: normal;
-    max-width: 300px; /* Giới hạn chiều rộng tooltip */
-    word-wrap: break-word;
-    z-index: 1000;
-    left: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
 
 
