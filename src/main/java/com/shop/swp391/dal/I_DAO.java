@@ -23,5 +23,5 @@ public interface I_DAO<T> {
     
     public int insert(T t);
     
-    public T getFromResultSet(ResultSet resultSet) throws SQLException;
+    public T getFromResultSet(ResultSet rs) throws SQLException;
 }
