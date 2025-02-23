@@ -4,6 +4,11 @@
  */
 package com.shop.swp391.entity;
 
+<<<<<<< HEAD
+=======
+import java.io.Serializable;
+import java.util.Date;
+>>>>>>> origin/binh
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +17,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/binh
 @ToString
 @Builder
 @Data
@@ -21,13 +29,20 @@ import lombok.ToString;
 @Getter
 @Setter
 
+<<<<<<< HEAD
 public class User {
     private int id;
     private String username;
+=======
+public class User implements Serializable {
+    private int userID;
+    private String userName;
+>>>>>>> origin/binh
     private String password;
     private String email;
     private String firstName;
     private String lastName;
+<<<<<<< HEAD
     private String dob;
     private boolean sex;
     private int roleId;
@@ -37,3 +52,10 @@ public class User {
 }
 
 
+=======
+    private Date dob;
+    private int sex;
+    private int role;
+    private String phone;
+}
+>>>>>>> origin/binh
