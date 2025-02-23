@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.ocms.dal;
+package com.shop.swp391.dal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,5 +23,5 @@ public interface I_DAO<T> {
     
     public int insert(T t);
     
-    public T getFromResultSet(ResultSet resultSet) throws SQLException;
+    public T getFromResultSet(ResultSet rs) throws SQLException;
 }

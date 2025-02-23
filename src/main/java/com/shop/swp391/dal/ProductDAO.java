@@ -4,7 +4,9 @@
  */
 package com.shop.swp391.dal;
 
+import com.shop.swp391.entity.Color;
 import com.shop.swp391.entity.Product;
+import com.shop.swp391.entity.Size;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -64,6 +66,7 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         Product product = null;
         String sql = "SELECT * FROM product WHERE ProductID = ?";
         try {
+            connection = new DBContext().getConnection();
             statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
@@ -97,25 +100,6 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             closeResources();
         }
         return 0;
-    }
-
-    public List<Product> findPagedProducts(int page, int pageSize) {
-        List<Product> products = new ArrayList<>();
-        int offset = (page - 1) * pageSize;
-        String sql = "SELECT * FROM product LIMIT ? OFFSET ?";
-        try {
-            connection = new DBContext().getConnection();
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, pageSize);
-            statement.setInt(2, offset);
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                products.add(getFromResultSet(resultSet));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return products;
     }
 
     public List<Product> searchWithPagination(String keyword, int pageNumber, int pageSize) {
@@ -154,157 +138,170 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         return count;
     }
 
-    public List<Product> findPagedProducts(int page, int pageSize, String sortBy) {
-    List<Product> products = new ArrayList<>();
-    int offset = (page - 1) * pageSize;
-    String sql = "SELECT * FROM product ";  // Corrected table name to "product" as per your previous example
-
-    // Add sorting based on the sortBy parameter
-    if ("name_asc".equals(sortBy)) {
-        sql += "ORDER BY productName ASC ";
-    } else if ("name_desc".equals(sortBy)) {
-        sql += "ORDER BY productName DESC ";
-    } else if ("price_asc".equals(sortBy)) {
-        sql += "ORDER BY price ASC ";
-    } else if ("price_desc".equals(sortBy)) {
-        sql += "ORDER BY price DESC ";
-    } else {
-        sql += "ORDER BY productID ASC "; // Default sorting by product_id
-    }
-
-    // Add pagination
-    sql += "LIMIT ? OFFSET ?";
-
-    try {
+    public List<Product> findPagedProducts(int page, int pageSize, String sortBy, Double minPrice, Double maxPrice, Integer colorID) {
+        List<Product> products = new ArrayList<>();
+        int offset = (page - 1) * pageSize;
+        StringBuilder sql = new StringBuilder("SELECT p.* FROM product p");
+        if (colorID != null) {
+            sql.append(" JOIN variation v ON p.ProductID = v.ProductID");
+        }
+        sql.append(" WHERE 1=1");
+        if (minPrice != null) {
+            sql.append(" AND p.Price >= ").append(minPrice);
+        }
+        if (maxPrice != null) {
+            sql.append(" AND p.Price <= ").append(maxPrice);
+        }
+        if (colorID != null) {
+            sql.append(" AND v.color_ID = ").append(colorID);
+        }
+        sql.append(" GROUP BY p.ProductID");
+        if (sortBy != null) {
+            switch (sortBy) {
+                case "name_asc":
+                    sql.append(" ORDER BY p.ProductName ASC");
+                    break;
+                case "name_desc":
+                    sql.append(" ORDER BY p.ProductName DESC");
+                    break;
+                case "price_asc":
+                    sql.append(" ORDER BY p.Price ASC");
+                    break;
+                case "price_desc":
+                    sql.append(" ORDER BY p.Price DESC");
+                    break;
+                default:
+                    break;
+            }
+        }
+        sql.append(" LIMIT ? OFFSET ?");
+        try {
             connection = new DBContext().getConnection();
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql.toString());
+            statement.setDouble(1, minPrice != null ? minPrice : 0.0);
+            statement.setDouble(2, maxPrice != null ? maxPrice : 1000000.0);
             statement.setInt(1, pageSize);
             statement.setInt(2, offset);
             resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            products.add(getFromResultSet(resultSet));
+            while (resultSet.next()) {
+                products.add(getFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error fetching paged products", e);
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-    }
-    return products;
-}
-    public List<Product> findPagedProducts(int page, int pageSize, String sortBy, Double minPrice, Double maxPrice, Integer colorID) {
-     List<Product> products = new ArrayList<>();     
-    int offset = (page - 1) * pageSize;
-    StringBuilder sql = new StringBuilder("SELECT p.* FROM product p");
-
-    // Join with variation table if color filter is applied
-    if (colorID != null) {
-        sql.append(" JOIN variation v ON p.ProductID = v.ProductID");
+        return products;
     }
 
-    sql.append(" WHERE 1=1");
+    public int getTotalProductCount(Double minPrice, Double maxPrice, Integer colorID) {
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM product p");
 
-    // Add price filter
-    if (minPrice != null) {
-        sql.append(" AND p.Price >= ").append(minPrice);
-    }
-    if (maxPrice != null) {
-        sql.append(" AND p.Price <= ").append(maxPrice);
-    }
-
-    // Add color filter
-    if (colorID != null) {
-        sql.append(" AND v.color_ID = ").append(colorID);
-    }
-
-    // Add sorting
-    if (sortBy != null) {
-        switch (sortBy) {
-            case "name_asc":
-                sql.append(" ORDER BY p.ProductName ASC");
-                break;
-            case "name_desc":
-                sql.append(" ORDER BY p.ProductName DESC");
-                break;
-            case "price_asc":
-                sql.append(" ORDER BY p.Price ASC");
-                break;
-            case "price_desc":
-                sql.append(" ORDER BY p.Price DESC");
-                break;
-            default:
-                // No sorting
-                break;
+        if (colorID != null) {
+            sql.append(" JOIN variation v ON p.ProductID = v.ProductID");
         }
-    }
+        sql.append(" WHERE 1=1");
 
-    // Add pagination
-    sql.append(" LIMIT ? OFFSET ?");
-
-    try {
-        connection = new DBContext().getConnection();
-        statement = connection.prepareStatement(sql.toString());
-        statement.setInt(1, pageSize);
-        statement.setInt(2, offset);
-        resultSet = statement.executeQuery();
-
-        while (resultSet.next()) {
-            products.add(getFromResultSet(resultSet));
+        if (minPrice != null) {
+            sql.append(" AND p.Price >= ").append(minPrice);
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        throw new RuntimeException("Error fetching paged products", e);
-    } finally {
-        // Close resources
+        if (maxPrice != null) {
+            sql.append(" AND p.Price <= ").append(maxPrice);
+        }
+
+        if (colorID != null) {
+            sql.append(" AND v.color_ID = ").append(colorID);
+        }
         try {
-            if (resultSet != null) resultSet.close();
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
+            connection = new DBContext().getConnection();
+            statement = connection.prepareStatement(sql.toString());
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error fetching total product count", e);
+        }
+        return 0;
+    }
+
+    public List<Color> getAvailableColors(int productId) {
+        List<Color> colors = new ArrayList<>();
+        String sql = "SELECT DISTINCT c.color_ID, c.color_name FROM variation v "
+                + "JOIN color c ON v.color_ID = c.color_ID "
+                + "WHERE v.ProductID = ?";
+
+        try {
+            connection = new DBContext().getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, productId);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Color color = new Color(resultSet.getInt("color_ID"), resultSet.getString("color_name"));
+                colors.add(color);
+
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return colors;
     }
 
-    return products;
-}
-public int getTotalProductCount(Double minPrice, Double maxPrice, Integer colorID) {
-    StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM product p");
+    public List<Size> getAvailableSizes(int productId) {
+        List<Size> sizes = new ArrayList<>();
+        String sql = "SELECT DISTINCT s.size_ID, s.size_name FROM variation v "
+                + "JOIN size s ON v.size_ID = s.size_ID "
+                + "WHERE v.ProductID = ?";
 
-    if (colorID != null) {
-        sql.append(" JOIN variation v ON p.ProductID = v.ProductID");
-    }
-    sql.append(" WHERE 1=1");
+        try {
+            connection = new DBContext().getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, productId);
+            resultSet = statement.executeQuery();
 
-    if (minPrice != null) {
-        sql.append(" AND p.Price >= ").append(minPrice);
-    }
-    if (maxPrice != null) {
-        sql.append(" AND p.Price <= ").append(maxPrice);
-    }
-
-    if (colorID != null) {
-        sql.append(" AND v.color_ID = ").append(colorID);
-    }
-    try {
-        connection = new DBContext().getConnection();
-        statement = connection.prepareStatement(sql.toString());
-        resultSet = statement.executeQuery();
-
-        if (resultSet.next()) {
-            return resultSet.getInt(1);
+            while (resultSet.next()) {
+                Size size = new Size(resultSet.getInt("size_ID"), resultSet.getString("size_name"));
+                sizes.add(size);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        throw new RuntimeException("Error fetching total product count", e);
-    } 
-    return 0;
-}
+        return sizes;
+    }
+
     public static void main(String[] args) {
         ProductDAO productDAO = new ProductDAO();
-        List<Product> products = productDAO.findAll();
-        if (products.isEmpty()) {
-            System.out.println("No products found.");
-        } else {
-            for (Product product : products) {
-                System.out.println(product);
-            }
+
+        int testProductId = 4; // Change this to a valid product ID from your database
+
+        // Test getAvailableColors
+        List<Color> colors = productDAO.getAvailableColors(testProductId);
+        System.out.println("Available Colors:");
+        for (Color color : colors) {
+            System.out.println("ID: " + color.getColorID() + ", Name: " + color.getColorName());
+        }
+
+        // Test getAvailableSizes
+        List<Size> sizes = productDAO.getAvailableSizes(testProductId);
+        System.out.println("\nAvailable Sizes:");
+        for (Size size : sizes) {
+            System.out.println("ID: " + size.getSizeID() + ", Name: " + size.getSizeName());
         }
     }
 }
