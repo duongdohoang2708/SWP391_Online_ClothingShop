@@ -108,7 +108,7 @@ public class ManagerStoryController extends HttpServlet {
 
         List<User> users = userDAO.findAll();
         Map<Integer, User> userMap = users.stream()
-                .collect(Collectors.toMap(User::getUserID, item -> item));
+                .collect(Collectors.toMap(User::getId, item -> item));
 
         request.setAttribute("stories", stories);
         request.setAttribute("currentPage", page);

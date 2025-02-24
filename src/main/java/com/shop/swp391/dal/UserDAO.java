@@ -4,7 +4,7 @@
  */
 package com.shop.swp391.dal;
 
-import com.ocms.dal.I_DAO;
+import com.shop.swp391.dal.I_DAO;
 import com.shop.swp391.config.GlobalConfig;
 import com.shop.swp391.entity.User;
 import java.sql.PreparedStatement;
