@@ -17,17 +17,21 @@
         <jsp:include page="../../common/dashboard/css-dashboard.jsp"></jsp:include>
             <style>
                 .description-column {
-                    max-width: 300px;
-                    max-height: 300px;
-                    min-height: 250px;
-                    min-width: 300px;
-                    overflow-y: auto;  /* Hiển thị thanh cuộn dọc khi nội dung dài */
-                    overflow-x: hidden; /* Ẩn thanh cuộn ngang */
-                    white-space: normal;
-                    word-wrap: break-word; /* Đảm bảo xuống dòng */
-                    padding: 10px;
-                    background: #fff; /* Giữ nền trắng */
-                }
+                max-width: 100%; /* Chiều rộng tối đa */
+                max-height: 200px; /* Chiều cao tối đa */
+                min-height: 150px; /* Đảm bảo chiều cao tối thiểu để ô luôn đủ lớn */
+                display: flex;
+                overflow: hidden; /* Ẩn phần nội dung vượt quá */
+                display: -webkit-box;
+                -webkit-line-clamp: 3; /* Giới hạn tối đa 3 dòng */
+                -webkit-box-orient: vertical;
+                overflow-y: auto;  /* Hiển thị thanh cuộn dọc khi nội dung dài */
+                overflow-x: hidden; /* Ẩn thanh cuộn ngang */
+                white-space: normal;
+                cursor: pointer; /* Hiển thị con trỏ khi di chuột vào */
+                padding: 10px; /* Giúp ô trông cân đối */
+                word-wrap: break-word; /* Đảm bảo xuống dòng */
+            }
             </style>
         </head>
 
@@ -116,8 +120,8 @@
                                                 <th style="width: 10%;">Image</th>
                                                 <th style="width: 15%;">Title</th>
                                                 <th style="width: 20%;">Backlink</th>
-                                                <th style="width: 10%;">Status</th>
-                                                <th style="width: 25%;">Description</th>
+                                                <th style="width: 20%;">Status</th>
+                                                <th style="width: 30%;">Description</th>
 
                                                 <th style="width: 10%; text-align: center;">Action</th>
                                             </tr>

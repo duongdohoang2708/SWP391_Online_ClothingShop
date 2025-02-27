@@ -107,6 +107,7 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
     }
 
     @Override
+    // cjuyen 1 dong ket qua thanh doi tuong story
     public Story getFromResultSet(ResultSet rs) throws SQLException {
         return Story.builder()
                 .storyId(rs.getInt("story_id"))
@@ -255,6 +256,23 @@ public class StoryDAO extends DBContext implements I_DAO<Story> {
             closeResources();
         }
         return stories;
+    }
+    // update story status
+    public boolean updateStoryStatus(int storyId, String status) {
+        String sql = "UPDATE story SET status = ? WHERE story_id = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, status);
+            statement.setInt(2, storyId);
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException ex) {
+            System.out.println("Error updating story status: " + ex.getMessage());
+            return false;
+        } finally {
+            closeResources();
+        }
     }
 
 }

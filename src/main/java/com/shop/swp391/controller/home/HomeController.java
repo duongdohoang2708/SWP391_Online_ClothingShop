@@ -14,13 +14,17 @@ import java.util.List;
 @WebServlet(name = "HomeController", urlPatterns = {"/home"})
 public class HomeController extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+   @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+        String action = request.getParameter("action");
         StoryDAO storyDAO = new StoryDAO();
-        List<Story> stories = storyDAO.getLatestActiveStories(); // Lấy 3 story active mới nhất
 
-        request.setAttribute("stories", stories); // Truyền dữ liệu sang home.jsp
-        request.getRequestDispatcher("/view/home/homepage.jsp").forward(request, response); // Chuyển hướng đến trang chủ
+        if ("activate".equals(action)) {
+            int storyId = Integer.parseInt(request.getParameter("storyId"));
+            boolean updated = storyDAO.updateStoryStatus(storyId, "Active");
+            response.setContentType("application/json");
+            response.getWriter().write("{\"success\": " + updated + "}");
+        }
     }
 }
