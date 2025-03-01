@@ -4,9 +4,11 @@
  */
 package com.shop.swp391.controller.home;
 
+import com.shop.swp391.dal.CategoryDAO;
 import com.shop.swp391.dal.ProductDAO;
 import com.shop.swp391.dal.ProductImgDAO;
 import com.shop.swp391.dal.VariationDAO;
+import com.shop.swp391.entity.Category;
 import com.shop.swp391.entity.Color;
 import com.shop.swp391.entity.Product;
 import com.shop.swp391.entity.Size;
@@ -17,7 +19,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -64,19 +68,18 @@ public class ProductDetailController extends HttpServlet {
     private final ProductDAO productDAO = new ProductDAO();
     private final ProductImgDAO productImgDAO = new ProductImgDAO();
     private final VariationDAO variationDAO = new VariationDAO();
+    private final CategoryDAO categoryDAO = new CategoryDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String productIdParam = request.getParameter("productID");
+        String productIdParam = request.getParameter("productID");
         if (productIdParam == null || productIdParam.isEmpty()) {
             response.sendRedirect("productlist.jsp");
             return;
         }
         try {
             int productId = Integer.parseInt(productIdParam);
-
-            // Fetch product details
             Product product = productDAO.getProductById(productId);
             if (product == null) {
                 response.sendRedirect("productlist.jsp");
@@ -85,16 +88,26 @@ public class ProductDetailController extends HttpServlet {
             String productThumbnail = productImgDAO.getProductThumbnail(productId);
             List<Color> colors = productDAO.getAvailableColors(productId);
             List<Size> sizes = productDAO.getAvailableSizes(productId);
+            int categoryId = product.getCategoryID();
+            List<Product> relatedProducts = productDAO.getRandomRelatedProducts(product.getCategoryID(), productId, 4);
+            Map<Integer, String> relatedThumbnails = new HashMap<>();
+            Category category = categoryDAO.getCategoryById(product.getCategoryID());
+            for (Product relatedProduct : relatedProducts) {
+                String thumbnail = productImgDAO.getProductThumbnail(relatedProduct.getProductID());
+                relatedThumbnails.put(relatedProduct.getProductID(), thumbnail);
+            }
             request.setAttribute("product", product);
             request.setAttribute("productThumbnail", productThumbnail);
             request.setAttribute("colors", colors);
-            request.setAttribute("sizes", sizes);           
+            request.setAttribute("sizes", sizes);
+            request.setAttribute("category", category);
+            request.setAttribute("relatedProducts", relatedProducts);
+            request.setAttribute("relatedThumbnails", relatedThumbnails);
             request.getRequestDispatcher("view/homepage/productdetails.jsp").forward(request, response);
         } catch (NumberFormatException e) {
             response.sendRedirect("productlist.jsp");
         }
     }
-    
 
     /**
      * Handles the HTTP <code>POST</code> method.

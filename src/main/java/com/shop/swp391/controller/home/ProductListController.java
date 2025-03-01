@@ -4,9 +4,11 @@
  */
 package com.shop.swp391.controller.home;
 
+import com.shop.swp391.dal.CategoryDAO;
 import com.shop.swp391.dal.ColorDAO;
 import com.shop.swp391.dal.ProductDAO;
 import com.shop.swp391.dal.ProductImgDAO;
+import com.shop.swp391.entity.Category;
 import com.shop.swp391.entity.Color;
 import com.shop.swp391.entity.Product;
 import java.io.IOException;
@@ -64,6 +66,7 @@ public class ProductListController extends HttpServlet {
      */
     private final ProductDAO productDAO = new ProductDAO();
     private final ProductImgDAO productImgDAO = new ProductImgDAO();
+    private final CategoryDAO categoryDAO = new CategoryDAO();
     private static final int PAGE_SIZE = 9;
 
     @Override
@@ -75,9 +78,12 @@ public class ProductListController extends HttpServlet {
         String maxPriceParam = request.getParameter("maxPrice");
         String priceRange = request.getParameter("price");
         String colorParam = request.getParameter("color");
-        Double minPrice = null;
-        Double maxPrice = null;
-        Integer colorID = null;
+        String categoryParam = request.getParameter("category");
+
+        Double minPrice = (minPriceParam != null && !minPriceParam.isEmpty()) ? Double.valueOf(minPriceParam) : null;
+        Double maxPrice = (maxPriceParam != null && !maxPriceParam.isEmpty()) ? Double.valueOf(maxPriceParam) : null;
+        Integer colorID = (colorParam != null && !colorParam.isEmpty()) ? Integer.valueOf(colorParam) : null;
+        Integer categoryID = (categoryParam != null && !categoryParam.isEmpty()) ? Integer.valueOf(categoryParam) : null;
         if (priceRange != null && !priceRange.isEmpty()) {
             String[] prices = priceRange.replace("$", "").split(" - ");
             if (prices.length == 2) {
@@ -116,13 +122,15 @@ public class ProductListController extends HttpServlet {
         if (page > totalPages) {
             page = totalPages;
         }
-        List<Product> products = productDAO.findPagedProducts(page, PAGE_SIZE, sortBy, minPrice, maxPrice, colorID);
+        List<Product> products = productDAO.findPagedProducts(page, PAGE_SIZE, sortBy, minPrice, maxPrice, colorID,categoryID);
+        List<Category> categories= categoryDAO.findAll();
         Map<Integer, String> productImages = new HashMap<>();
         for (Product product : products) {
             String imagePath = productImgDAO.getProductThumbnail(product.getProductID());
             productImages.put(product.getProductID(), imagePath);
         }
         request.setAttribute("products", products);
+        request.setAttribute("categories", categories);
         request.setAttribute("productImages", productImages);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
@@ -130,6 +138,7 @@ public class ProductListController extends HttpServlet {
         request.setAttribute("minPrice", minPrice);
         request.setAttribute("maxPrice", maxPrice);
         request.setAttribute("color", colorID);
+        request.setAttribute("category", categoryID);
         request.getRequestDispatcher("view/homepage/productlist.jsp").forward(request, response);
     }
 
