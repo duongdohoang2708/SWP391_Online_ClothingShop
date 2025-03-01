@@ -51,10 +51,33 @@ public class CategoryDAO extends DBContext implements I_DAO<Category> {
     @Override
     public Category getFromResultSet(ResultSet rs) throws SQLException {
         return new Category(
-            rs.getInt("CategoryID"),
-            rs.getString("CategoryName"),
-            rs.getString("Category_img")
+                rs.getInt("CategoryID"),
+                rs.getString("CategoryName"),
+                rs.getString("Category_img")
         );
     }
 
+    public Category getCategoryById(int categoryId) {
+        String sql = "SELECT * FROM category WHERE CategoryID = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, categoryId);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return getFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; 
+    }
+
+    public static void main(String[] args) {
+        CategoryDAO categoryDAO = new CategoryDAO();
+        List<Category> categories = categoryDAO.findAll();
+        for (Category category : categories) {
+            System.out.println("ID: " + category.getCategoryID() + category.getCategoryName());
+        }
+    }
 }
