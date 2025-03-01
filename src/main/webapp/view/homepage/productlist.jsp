@@ -12,7 +12,9 @@
     <%@page import="java.util.Map"%>
     <%@page import="com.shop.swp391.entity.Product"%>
     <%@page import="com.shop.swp391.entity.Color"%>
+    <%@page import="com.shop.swp391.entity.Category"%>
     <%@page import="com.shop.swp391.entity.ProductImg"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <!-- Mirrored from htmldemo.net/clothing/clothing/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Feb 2025 03:37:06 GMT -->
     <head>
         <meta charset="utf-8">
@@ -35,12 +37,16 @@
     <% 
    List<Product> products = (List<Product>) request.getAttribute("products");
    Map<Integer, String> productImages = (Map<Integer, String>) request.getAttribute("productImages");
+
    int currentPage = (int) request.getAttribute("currentPage");
    int totalPages = (int) request.getAttribute("totalPages");
+
    int pagesToShow = 5;
    int halfPagesToShow = pagesToShow / 2;
    int startPage = Math.max(1, currentPage - halfPagesToShow);
    int endPage = Math.min(totalPages, startPage + pagesToShow - 1);
+
+   // Ensure at least 'pagesToShow' pages appear if possible
    if (endPage - startPage + 1 < pagesToShow) {
        startPage = Math.max(1, endPage - pagesToShow + 1);
    }
@@ -227,9 +233,9 @@
                                         $("#slider-range").slider({
                                             range: true,
                                             min: 0,
-                                            max: 1000000, 
-                                            values: [0, 1000000], 
-                                            step: 1000, 
+                                            max: 1000000,
+                                            values: [0, 1000000],
+                                            step: 1000,
                                             slide: function (event, ui) {
                                                 $("#amount").val("$" + ui.values[0].toLocaleString() + " - $" + ui.values[1].toLocaleString());
                                                 $("#minPrice").val(ui.values[0]);
@@ -268,17 +274,31 @@
                                         <li><a href="products?color=9" style="background-color: tan;"></a></li> <!-- Tan -->
                                         <li><a href="products?color=10" style="background-color: red;"></a></li> <!-- Red -->
                                     </ul>
-                                    <br>
-                                    <div class="clear-filter">
-                                        <a href="products" class="clear-btn" 
-                                           style="display: inline-block; padding: 8px 15px; background-color: #ff4d4d; color: white;
-                                           text-decoration: none; border-radius: 5px; font-weight: bold; transition: 0.3s;"
-                                           onmouseover="this.style.backgroundColor = '#d43f3f';" 
-                                           onmouseout="this.style.backgroundColor = '#ff4d4d';">
-                                            Clear 
-                                        </a>
-                                    </div>
+                                    <br>                         
                                 </aside>
+                                <aside class="single-aside tag-aside">
+                                    <div class="heading-title aside-title pos-rltv">
+                                        <h5 class="uppercase">Product Tags</h5>
+                                    </div>
+                                    <ul class="tag-filter mt-30">
+                                        <c:forEach var="category" items="${categories}">
+                                            <li>
+                                                <a href="products?category=${category.categoryID}">
+                                                    ${category.categoryName}
+                                                </a>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </aside>
+                                <div class="clear-filter">
+                                    <a href="products" class="clear-btn" 
+                                       style="display: inline-block; padding: 8px 15px; background-color: #ff4d4d; color: white;
+                                       text-decoration: none; border-radius: 5px; font-weight: bold; transition: 0.3s;"
+                                       onmouseover="this.style.backgroundColor = '#d43f3f';" 
+                                       onmouseout="this.style.backgroundColor = '#ff4d4d';">
+                                        Clear 
+                                    </a>
+                                </div>
                                 <!--single aside end-->
 
                                 <!--single aside start-->
