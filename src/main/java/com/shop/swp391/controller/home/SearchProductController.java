@@ -64,12 +64,13 @@ public class SearchProductController extends HttpServlet {
         String keyword = request.getParameter("keyword");
         String pageParam = request.getParameter("page");
         int pageNumber = (pageParam != null && !pageParam.isEmpty()) ? Integer.parseInt(pageParam) : 1;
-        int pageSize = 10;
+        int pageSize = 9;
         ProductDAO productDAO = new ProductDAO();
         List<Product> products = productDAO.searchWithPagination(keyword, pageNumber, pageSize);
         request.setAttribute("products", products);
         request.setAttribute("currentPage", pageNumber);
-        request.getRequestDispatcher("view/homepage/productlist.jsp").forward(request, response);
+        request.setAttribute("keyword", keyword);
+        request.getRequestDispatcher("products").forward(request, response);
     }
 
     /**

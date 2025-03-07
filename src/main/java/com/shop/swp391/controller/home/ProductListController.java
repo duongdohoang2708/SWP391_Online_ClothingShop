@@ -122,8 +122,8 @@ public class ProductListController extends HttpServlet {
         if (page > totalPages) {
             page = totalPages;
         }
-        List<Product> products = productDAO.findPagedProducts(page, PAGE_SIZE, sortBy, minPrice, maxPrice, colorID,categoryID);
-        List<Category> categories= categoryDAO.findAll();
+        List<Product> products = productDAO.findPagedProducts(page, PAGE_SIZE, sortBy, minPrice, maxPrice, colorID, categoryID);
+        List<Category> categories = categoryDAO.findAll();
         Map<Integer, String> productImages = new HashMap<>();
         for (Product product : products) {
             String imagePath = productImgDAO.getProductThumbnail(product.getProductID());
