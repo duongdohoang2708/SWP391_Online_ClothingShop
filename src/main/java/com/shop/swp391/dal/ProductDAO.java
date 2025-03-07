@@ -36,18 +36,65 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
     }
 
     @Override
-    public boolean update(Product t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean update(Product product) {
+        String sql = "UPDATE product SET categoryID = ?, productName = ?, price = ?, collectionID = ?, description = ? WHERE productID = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, product.getCategoryID());
+            statement.setString(2, product.getProductName());
+            statement.setDouble(3, product.getPrice());
+            statement.setInt(4, product.getCollectionID());
+            statement.setString(5, product.getDescription());
+            statement.setInt(6, product.getProductID());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+        return false;
     }
 
     @Override
-    public boolean delete(Product t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean delete(Product product) {
+        String sql = "DELETE FROM product WHERE productID = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, product.getProductID());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public int insert(Product t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int insert(Product product) {
+        String sql = "INSERT INTO product (categoryID, productName, price, collectionID, description) VALUES (?, ?, ?, ?, ?)";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, product.getCategoryID());
+            statement.setString(2, product.getProductName());
+            statement.setDouble(3, product.getPrice());
+            statement.setInt(4, product.getCollectionID());
+            statement.setString(5, product.getDescription());
+
+            int rowsAffected = statement.executeUpdate(); // ✅ Use executeUpdate()
+            if (rowsAffected > 0) {
+                resultSet = statement.getGeneratedKeys(); // ✅ Retrieve auto-generated ProductID
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+        return -1;
     }
 
     @Override
@@ -104,7 +151,7 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
 
     public List<Product> searchWithPagination(String keyword, int pageNumber, int pageSize) {
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT * FROM Product WHERE productName LIKE ? LIMIT ? OFFSET ?";
+        String sql = "SELECT * FROM Product WHERE productName LIKE ? ORDER BY ProductID LIMIT ? OFFSET ?";
         try {
             connection = new DBContext().getConnection();
             statement = connection.prepareStatement(sql);
@@ -244,6 +291,113 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
         return products;
     }
 
+    public List<Product> findPagedProducts(int page, int pageSize, String keyword, String sortBy,
+            Double minPrice, Double maxPrice, Integer colorID, Integer categoryID) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM Product WHERE 1=1";
+
+        if (keyword != null && !keyword.isEmpty()) {
+            sql += " AND productName LIKE ?";
+        }
+        if (minPrice != null) {
+            sql += " AND price >= ?";
+        }
+        if (maxPrice != null) {
+            sql += " AND price <= ?";
+        }
+        if (colorID != null) {
+            sql += " AND colorID = ?";
+        }
+        if (categoryID != null) {
+            sql += " AND categoryID = ?";
+        }
+        if (sortBy != null && !sortBy.isEmpty()) {
+            sql += " ORDER BY " + sortBy;
+        }
+        sql += " LIMIT ? OFFSET ?";
+
+        try {
+            connection = new DBContext().getConnection();
+            statement = connection.prepareStatement(sql);
+
+            int index = 1;
+            if (keyword != null && !keyword.isEmpty()) {
+                statement.setString(index++, "%" + keyword + "%");
+            }
+            if (minPrice != null) {
+                statement.setDouble(index++, minPrice);
+            }
+            if (maxPrice != null) {
+                statement.setDouble(index++, maxPrice);
+            }
+            if (colorID != null) {
+                statement.setInt(index++, colorID);
+            }
+            if (categoryID != null) {
+                statement.setInt(index++, categoryID);
+            }
+            statement.setInt(index++, pageSize);
+            statement.setInt(index++, (page - 1) * pageSize);
+
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                products.add(getFromResultSet(resultSet));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+    public int getTotalProductCount(String keyword, Double minPrice, Double maxPrice, Integer colorID, Integer categoryID) {
+    String sql = "SELECT COUNT(*) FROM Product WHERE 1=1";
+
+    if (keyword != null && !keyword.isEmpty()) {
+        sql += " AND productName LIKE ?";
+    }
+    if (minPrice != null) {
+        sql += " AND price >= ?";
+    }
+    if (maxPrice != null) {
+        sql += " AND price <= ?";
+    }
+    if (colorID != null) {
+        sql += " AND colorID = ?";
+    }
+    if (categoryID != null) {
+        sql += " AND categoryID = ?";
+    }
+
+    try {
+        connection = new DBContext().getConnection();
+        statement = connection.prepareStatement(sql);
+        
+        int index = 1;
+        if (keyword != null && !keyword.isEmpty()) {
+            statement.setString(index++, "%" + keyword + "%");
+        }
+        if (minPrice != null) {
+            statement.setDouble(index++, minPrice);
+        }
+        if (maxPrice != null) {
+            statement.setDouble(index++, maxPrice);
+        }
+        if (colorID != null) {
+            statement.setInt(index++, colorID);
+        }
+        if (categoryID != null) {
+            statement.setInt(index++, categoryID);
+        }
+
+        resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt(1);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0;
+}
+
     public int getTotalProductCount(Double minPrice, Double maxPrice, Integer colorID, Integer categoryID) {
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM product p WHERE p.Price BETWEEN ? AND ?");
 
@@ -369,6 +523,24 @@ public class ProductDAO extends DBContext implements I_DAO<Product> {
             e.printStackTrace();
         }
         return relatedProducts;
+    }
+
+    public List<Product> getProductsByPage(int start, int total) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM product LIMIT ? OFFSET ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, total);
+            statement.setInt(2, start);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                products.add(getFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
     }
 
     public static void main(String[] args) {
