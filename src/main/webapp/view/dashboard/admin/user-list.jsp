@@ -17,7 +17,7 @@
   <title>Wowdash - Bootstrap 5 Admin Dashboard HTML Template</title>
   <link rel="icon" type="image/png" href="assets/images/favicon.png" sizes="16x16">
   <!-- CSS here -->
-  <jsp:include page="../../common/dashboard/css-dashboard.jsp"></jsp:include>
+   <jsp:include page="../../common/dashboard/css-dashboard.jsp"></jsp:include>
 </head>
   <body>
       <!-- Sidebar -->

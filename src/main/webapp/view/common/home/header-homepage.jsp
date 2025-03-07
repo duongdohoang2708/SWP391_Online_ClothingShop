@@ -102,36 +102,19 @@
                     <div class="col-lg-7 col-md-10 d-none d-md-block">
                         <nav id="primary-menu">
                             <ul class="main-menu">
-                                <li class="current"><a class="active" href="index.html">Home</a>
-                                    <ul class="dropdown">
-                                        <li><a class="active" href="index.html">Home One</a></li>
-                                        <li><a href="index-2.html">Home Two</a></li>
-                                        <li><a href="index-boxed-01.html">Home Three (Boxed)</a></li>
-                                        <li><a href="index-boxed-02.html">Home Four (Boxed)</a></li>
-                                    </ul>
+                                <li class="current"><a class="active" href="home">Home</a>
                                 </li>
                                 <li class="mega-parent pos-rltv"><a href="shop.html">Man</a>
                                     <div class="mega-menu-area mma-800">
                                         <ul class="single-mega-item">
                                             <li class="menu-title uppercase">Shirts</li>
-                                            <li><a href="shop.html">Shirt 01</a></li>
-                                            <li><a href="shop.html">Shirt 02</a></li>
-                                            <li><a href="shop.html">Shirt 03</a></li>
-                                            <li><a href="shop.html">Shirt 04</a></li>
+                                            <li><a href="products?category=3">Tank</a></li>
+                                            <li><a href="products?category=5">Top</a></li>
                                         </ul>
                                         <ul class="single-mega-item">
                                             <li class="menu-title uppercase">Pants</li>
-                                            <li><a href="shop.html">Pant 01</a></li>
-                                            <li><a href="shop.html">Pant 02</a></li>
-                                            <li><a href="shop.html">Pant 03</a></li>
-                                            <li><a href="shop.html">Pant 04</a></li>
-                                        </ul>
-                                        <ul class="single-mega-item">
-                                            <li class="menu-title uppercase">T-Shirts</li>
-                                            <li><a href="shop.html">T-Shirt 01</a></li>
-                                            <li><a href="shop.html">T-Shirt 02</a></li>
-                                            <li><a href="shop.html">T-Shirt 03</a></li>
-                                            <li><a href="shop.html">T-Shirt 04</a></li>
+                                            <li><a href="products?category=2">denim</a></li>
+                                            <li><a href="products?category=4">Bottom</a></li>
                                         </ul>
                                         <div class="mega-banner-img">
                                             <a href="single-product.html"><img
@@ -142,28 +125,14 @@
                                 <li class="mega-parent pos-rltv"><a href="shop.html">Women</a>
                                     <div class="mega-menu-area mma-700">
                                         <ul class="single-mega-item">
-                                            <li class="menu-title uppercase">Sharees</li>
-                                            <li><a href="shop.html">Sharee 01</a></li>
-                                            <li><a href="shop.html">Sharee 02</a></li>
-                                            <li><a href="shop.html">Sharee 03</a></li>
-                                            <li><a href="shop.html">Sharee 04</a></li>
-                                            <li><a href="shop.html">Sharee 05</a></li>
+                                            <li class="menu-title uppercase">Dress</li>
+                                            <li><a href="products?category=1">Dress</a></li>
+                                            <li><a href="products?category=7">Swim</a></li>
                                         </ul>
                                         <ul class="single-mega-item">
-                                            <li class="menu-title uppercase">Lahenga</li>
-                                            <li><a href="shop.html">Lahenga 01</a></li>
-                                            <li><a href="shop.html">Lahenga 02</a></li>
-                                            <li><a href="shop.html">Lahenga 03</a></li>
-                                            <li><a href="shop.html">Lahenga 04</a></li>
-                                            <li><a href="shop.html">Lahenga 05</a></li>
-                                        </ul>
-                                        <ul class="single-mega-item">
-                                            <li class="menu-title uppercase">Sandels</li>
-                                            <li><a href="shop.html">Sandel 01</a></li>
-                                            <li><a href="shop.html">Sandel 02</a></li>
-                                            <li><a href="shop.html">Sandel 03</a></li>
-                                            <li><a href="shop.html">Sandel 04</a></li>
-                                            <li><a href="shop.html">Sandel 05</a></li>
+                                            <li class="menu-title uppercase">Skirts</li>
+                                            <li><a href="products?category=8">Short and Skirt</a></li>
+                                            <li><a href="products?category=6">Accessories</a></li>
                                         </ul>
                                         <div class="mega-banner-img">
                                             <a href="single-product.html"><img
@@ -260,10 +229,10 @@
                         <div class="search-box global-table">
                             <div class="global-row">
                                 <div class="global-cell">
-                                    <form action="#">
+                                    <form action="search" method="get">
                                         <div class="input-box">
-                                            <input class="single-input" placeholder="Search anything"
-                                                   type="text">
+                                            <input type="text" name="keyword" placeholder="Search anything" 
+                                                   value="<%= request.getParameter("keyword") != null ? request.getParameter("keyword") : "" %>">
                                             <button class="src-btn"><i class="fa fa-search"></i></button>
                                         </div>
                                     </form>

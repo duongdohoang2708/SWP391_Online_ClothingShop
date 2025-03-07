@@ -15,6 +15,7 @@
     <%@page import="com.shop.swp391.entity.Category"%>
     <%@page import="com.shop.swp391.entity.ProductImg"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <!-- Mirrored from htmldemo.net/clothing/clothing/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Feb 2025 03:37:06 GMT -->
     <head>
         <meta charset="utf-8">
@@ -40,7 +41,7 @@
 
    int currentPage = (int) request.getAttribute("currentPage");
    int totalPages = (int) request.getAttribute("totalPages");
-
+   String keyword = (String) request.getAttribute("keyword");
    int pagesToShow = 5;
    int halfPagesToShow = pagesToShow / 2;
    int startPage = Math.max(1, currentPage - halfPagesToShow);
@@ -106,9 +107,6 @@
                                                     <div class="col-lg-4 col-md-6 item">
                                                         <div class="single-product">
                                                             <div class="product-img">
-                                                                <div class="product-label red">
-                                                                    <div class="new">New</div>
-                                                                </div>
                                                                 <div class="single-prodcut-img product-overlay pos-rltv">
                                                                     <a href="product-detail?productID=<%= product.getProductID() %>">
                                                                         <img alt="" src="<%= productImages.get(product.getProductID()) %>" class="primary-image" style="width: 200px; height: 200px; object-fit: cover;">
